@@ -15,24 +15,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
- 
-
-/* Structure pour la génération du labyrinthe */
-typedef struct Cell {
-	int MUR_HAUT;
-	int MUR_BAS;
-	int MUR_GAUCHE;
-	int MUR_DROITE;
-	int MUR_AVANT;
-	int MUR_ARRIERE;
-	int VISITED;
-}Cell;
-
-typedef struct Maze {
-	int width, length, heigth;
-	Cell*** cases;
-}Maze;
-
+#include "struct.h"
+#include "pile.h"
 
 /* variable labyrinthe */
 Maze maze;
@@ -45,7 +29,7 @@ void free_maze(Maze *maze);
 
 /* Génération du labyrinthe */
 void generate_maze(Maze *maze);
-Cell* random_unvisited_neighbour(Maze *maze, Cell *c, int x, int y, int z);
+Cell* random_unvisited_neighbour(Maze *maze, int x, int y, int z);
 void carve_maze(Maze *maze, Pile *p, int x, int y, int z);
 
 #endif /* _MAZE_ */

@@ -12,18 +12,8 @@
 #ifndef _PILE_
 #define _PILE_
 
+#include "struct.h"
 #include "maze.h"
-
-typedef struct Element {
-	Cell *cell;
-	Element *suivant;
-}Element;
-
-typedef struct Pile {
-	int nb_elem;
-	Element *debut;
-	Element *sommet;
-}Pile;
 
 void initialiserPile(Pile *p);
 

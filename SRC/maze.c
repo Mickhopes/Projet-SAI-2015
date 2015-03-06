@@ -9,9 +9,7 @@
  *
  *****************************************************/
 
-#include <time.h>
 #include "maze.h"
-#include "pile.h"
 
 int init_maze(Maze *maze, int width, int length, int heigth) {
 	int i, j, k;
@@ -71,14 +69,14 @@ void generate_maze(Maze *maze) {
 	carve_maze(maze, &p, 0, 0, 0);
 }
 
-Cell* random_unvisited_neighbour(Maze *maze, Cell *c, int x, int y, int z) {
+Cell* random_unvisited_neighbour(Maze *maze, int x, int y, int z) {
 	int tx, ty, tz, n, t[3];
 	int v = 0;
 
 	/* On regarde si un des voisins est non visité avant d'en rechercher un aléatoirement */
-	if (x == 0) {
+	/*if (x == 0) {
 		if ()
-	}
+	}*/
 
 	do {
 		/* On choisit x en surveillant les bornes */

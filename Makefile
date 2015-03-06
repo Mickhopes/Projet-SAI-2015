@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -W -Wall -pedantic -lGL -lGLU -lglut -lm
+CFLAGS = -W -Wall -lGL -lGLU -lglut -lm
 
 #
 # DIRositories.
