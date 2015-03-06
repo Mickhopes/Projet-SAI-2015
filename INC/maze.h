@@ -35,4 +35,7 @@ void remove_walls(Cell *c, Cell *v);
 void generate_maze(Maze *maze);
 void carve_maze(Maze *maze, Pile *p, int x, int y, int z);
 
+/* Affichage du labyrinthe */
+void show_maze(Maze *maze);
+
 #endif /* _MAZE_ */

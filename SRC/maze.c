@@ -68,9 +68,9 @@ void free_maze(Maze *maze) {
 Cell* random_unvisited_neighbour(Maze *maze, Cell *c) {
 	int tx[6], ty[6], tz[6];
 	int nb_voisins, all_visited, i, r;
-	
+
 	nb_voisins = 0;
-	
+
 	/* On regarde les voisins possibles en x */
 	if (c->x == 0) {
 		tx[nb_voisins] = c->x+1;
@@ -91,7 +91,7 @@ Cell* random_unvisited_neighbour(Maze *maze, Cell *c) {
 		tz[nb_voisins+1] = c->z;
 		nb_voisins = nb_voisins+2;
 	}
-	
+
 	/* On regarde les voisins possible en y */
 	if (c->y == 0) {
 		tx[nb_voisins] = c->x;
@@ -112,7 +112,7 @@ Cell* random_unvisited_neighbour(Maze *maze, Cell *c) {
 		tz[nb_voisins+1] = c->z;
 		nb_voisins = nb_voisins+2;
 	}
-	
+
 	/* On regarde les voisins possibles en z */
 	if (c->z == 0) {
 		tx[nb_voisins] = c->x;
@@ -133,7 +133,7 @@ Cell* random_unvisited_neighbour(Maze *maze, Cell *c) {
 		tz[nb_voisins+1] = c->z-1;
 		nb_voisins = nb_voisins+2;
 	}
-	
+
 	/* On regarde si tous les voisins ont été visité */
 	all_visited = 0;
 	for(i = 0; i < nb_voisins; i++) {
@@ -141,12 +141,12 @@ Cell* random_unvisited_neighbour(Maze *maze, Cell *c) {
 			all_visited++;
 		}
 	}
-	
+
 	/* Tous les voisins de la cases (x,y,z) ont été visité */
 	if (all_visited == nb_voisins) {
 		return NULL;
 	}
-	
+
 	/* On sait qu'il y a un voisin non visité alors on prends les coordonées aléatoirement jusqu'a tombé sur un */
 	do {
 		r = rand()%nb_voisins;
@@ -164,7 +164,7 @@ void remove_walls(Cell *c, Cell *v) {
 		c->MUR_GAUCHE = 0;
 		v->MUR_DROITE = 0;
 	}
-	
+
 	/* Si le voisin de c est devant ou derrière */
 	if (v->y == c->y+1) {
 		v->MUR_AVANT = 0;
@@ -173,7 +173,7 @@ void remove_walls(Cell *c, Cell *v) {
 		c->MUR_AVANT = 0;
 		v->MUR_ARRIERE = 0;
 	}
-	
+
 	/* Si le voisin de c est au dessus ou en dessous */
 	if (v->z == c->z+1) {
 		v->MUR_BAS = 0;
@@ -194,7 +194,7 @@ void generate_maze(Maze *maze) {
 void carve_maze(Maze *maze, Pile *p, int x, int y, int z) {
 	Cell *courant = &(maze->cases[x][y][z]);
 	Cell *voisin;
-	
+
 	courant->VISITED = 1;
 	voisin = random_unvisited_neighbour(maze, courant);
 	if (voisin != NULL) {
@@ -207,5 +207,43 @@ void carve_maze(Maze *maze, Pile *p, int x, int y, int z) {
 			depiler(p);
 			carve_maze(maze, p, voisin->x, voisin->y, voisin->z);
 		}
+	}
+}
+
+void show_maze(Maze *maze) {
+    int x, y, z;
+
+    for(z = 0; z < maze->heigth; z++) {
+	    printf("Level %d:\n", z);
+	    for(y = 0; y < maze->length; y++) {
+            printf("___");
+	    }
+	    printf("\n");
+        for(x = 0; x < maze->width; x++) {
+            printf("|");
+            for(y = 0; y < maze->length; y++) {
+                if (maze->cases[x][y][z].MUR_DROITE == 1) {
+                    printf("_");
+                } else {
+                    printf(" ");
+                }
+                if (maze->cases[x][y][z].MUR_BAS == 0 && maze->cases[x][y][z].MUR_HAUT == 0) {
+                    printf("X");
+                } else if (maze->cases[x][y][z].MUR_BAS == 0) {
+                    printf("-");
+                } else if (maze->cases[x][y][z].MUR_HAUT == 0) {
+                    printf("+");
+                } else {
+                    printf(" ");
+                }
+                if (maze->cases[x][y][z].MUR_ARRIERE == 1) {
+                    printf("|");
+                } else {
+                    printf(" ");
+                }
+            }
+            printf("\n");
+        }
+        printf("\n");
 	}
 }
