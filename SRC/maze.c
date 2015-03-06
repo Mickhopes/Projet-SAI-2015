@@ -70,62 +70,93 @@ void generate_maze(Maze *maze) {
 }
 
 Cell* random_unvisited_neighbour(Maze *maze, int x, int y, int z) {
-	int tx, ty, tz, n, t[3];
-	int v = 0;
-
-	/* On regarde si un des voisins est non visité avant d'en rechercher un aléatoirement */
-	/*if (x == 0) {
-		if ()
-	}*/
-
+	int tx[6], ty[6], tz[6];
+	int nb_voisins, all_visited, i, r;
+	
+	nb_voisins = 0;
+	
+	/* On regarde les voisins possibles en x */
+	if (x == 0) {
+		tx[nb_voisins] = x+1;
+		ty[nb_voisins] = y;
+		tz[nb_voisins] = z;
+		nb_voisins++;
+	} else if (x == maze->width-1) {
+		tx[nb_voisins] = x-1;
+		ty[nb_voisins] = y;
+		tz[nb_voisins] = z;
+		nb_voisins++;
+	} else {
+		tx[nb_voisins] = x+1;
+		ty[nb_voisins] = y;
+		tz[nb_voisins] = z;
+		tx[nb_voisins+1] = x-1;
+		ty[nb_voisins+1] = y;
+		tz[nb_voisins+1] = z;
+		nb_voisins = nb_voisins+2;
+	}
+	
+	/* On regarde les voisins possible en y */
+	if (y == 0) {
+		tx[nb_voisins] = x;
+		ty[nb_voisins] = y+1;
+		tz[nb_voisins] = z;
+		nb_voisins++;
+	} else if (y == maze->length-1) {
+		tx[nb_voisins] = x;
+		ty[nb_voisins] = y-1;
+		tz[nb_voisins] = z;
+		nb_voisins++;
+	} else {
+		tx[nb_voisins] = x;
+		ty[nb_voisins] = y+1;
+		tz[nb_voisins] = z;
+		tx[nb_voisins+1] = x;
+		ty[nb_voisins+1] = y-1;
+		tz[nb_voisins+1] = z;
+		nb_voisins = nb_voisins+2;
+	}
+	
+	/* On regarde les voisins possibles en z */
+	if (z == 0) {
+		tx[nb_voisins] = x;
+		ty[nb_voisins] = y;
+		tz[nb_voisins] = z+1;
+		nb_voisins++;
+	} else if (z == maze->heigth-1) {
+		tx[nb_voisins] = x;
+		ty[nb_voisins] = y;
+		tz[nb_voisins] = z-1;
+		nb_voisins++;
+	} else {
+		tx[nb_voisins] = x;
+		ty[nb_voisins] = y;
+		tz[nb_voisins] = z+1;
+		tx[nb_voisins+1] = x;
+		ty[nb_voisins+1] = y;
+		tz[nb_voisins+1] = z-1;
+		nb_voisins = nb_voisins+2;
+	}
+	
+	/* On regarde si tous les voisins ont été visité */
+	all_visited = 0;
+	for(i = 0; i < nb_voisins; i++) {
+		if (maze->cases[tx[i]][ty[i]][tz[i]].VISITED == 1) {
+			all_visited++;
+		}
+	}
+	
+	/* Tous les voisins de la cases (x,y,z) ont été visité */
+	if (all_visited == nb_voisins) {
+		return NULL;
+	}
+	
+	/* On sait qu'il y a un voisin non visité alors on prends les coordonées aléatoirement jusqu'a tombé sur un */
 	do {
-		/* On choisit x en surveillant les bornes */
-		t[0] = x;
-		if (x == 0) {
-			t[1] = x+1;
-			n = 2;
-		} else if (x == maze->width-1) {
-			t[1] = x-1;
-			n = 2;
-		} else {
-			t[1] = x-1;
-			t[2] = x+1;
-			n = 3;
-		}
-		tx = t[rand()%n];
+		r = rand()%nb_voisins;
+	} while(maze->cases[tx[r]][ty[r]][tz[r]].VISITED == 1);
 
-		/* On choisit y en surveillant les bornes */
-		t[0] = y;
-		if (y == 0) {
-			t[1] = y+1;
-			n = 2;
-		} else if (y == maze->length-1) {
-			t[1] = y-1;
-			n = 2;
-		} else {
-			t[1] = y-1;
-			t[2] = y+1;
-			n = 3;
-		}
-		ty = t[rand()%n];
-
-		/* On choisit z en surveillant les bornes */
-		t[0] = z;
-		if (z == 0) {
-			t[1] = z+1;
-			n = 2;
-		} else if (x == maze->heigth-1) {
-			t[1] = z-1;
-			n = 2;
-		} else {
-			t[1] = z-1;
-			t[2] = z+1;
-			n = 3;
-		}
-		tz = t[rand()%n];
-	} while(maze->cases[tx][ty][tz].VISITED == 1);
-
-	return &(maze->cases[tx][ty][tz]);
+	return &(maze->cases[tx[r]][ty[r]][tz[r]]);
 }
 
 void carve_maze(Maze *maze, Pile *p, int x, int y, int z) {
