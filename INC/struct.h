@@ -13,6 +13,7 @@
 #define _STRUCT_
 
 typedef struct Cell {
+	int x, y, z;
 	int MUR_HAUT;
 	int MUR_BAS;
 	int MUR_GAUCHE;

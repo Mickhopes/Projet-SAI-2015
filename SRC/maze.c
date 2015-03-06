@@ -44,6 +44,9 @@ int init_maze(Maze *maze, int width, int length, int heigth) {
 				maze->cases[i][j][k].MUR_AVANT = 1;
 				maze->cases[i][j][k].MUR_ARRIERE = 1;
 				maze->cases[i][j][k].VISITED = 0;
+				maze->cases[i][j][k].x = i;
+				maze->cases[i][j][k].y = j;
+				maze->cases[i][j][k].z = k;
 			}
 		}
 	}
@@ -62,79 +65,72 @@ void free_maze(Maze *maze) {
 	free(maze->cases);
 }
 
-void generate_maze(Maze *maze) {
-	srand(time(NULL));
-	Pile p;
-	initialiserPile(&p);
-	carve_maze(maze, &p, 0, 0, 0);
-}
-
-Cell* random_unvisited_neighbour(Maze *maze, int x, int y, int z) {
+Cell* random_unvisited_neighbour(Maze *maze, Cell *c) {
 	int tx[6], ty[6], tz[6];
 	int nb_voisins, all_visited, i, r;
 	
 	nb_voisins = 0;
 	
 	/* On regarde les voisins possibles en x */
-	if (x == 0) {
-		tx[nb_voisins] = x+1;
-		ty[nb_voisins] = y;
-		tz[nb_voisins] = z;
+	if (c->x == 0) {
+		tx[nb_voisins] = c->x+1;
+		ty[nb_voisins] = c->y;
+		tz[nb_voisins] = c->z;
 		nb_voisins++;
-	} else if (x == maze->width-1) {
-		tx[nb_voisins] = x-1;
-		ty[nb_voisins] = y;
-		tz[nb_voisins] = z;
+	} else if (c->x == maze->width-1) {
+		tx[nb_voisins] = c->x-1;
+		ty[nb_voisins] = c->y;
+		tz[nb_voisins] = c->z;
 		nb_voisins++;
 	} else {
-		tx[nb_voisins] = x+1;
-		ty[nb_voisins] = y;
-		tz[nb_voisins] = z;
-		tx[nb_voisins+1] = x-1;
-		ty[nb_voisins+1] = y;
-		tz[nb_voisins+1] = z;
+		tx[nb_voisins] = c->x+1;
+		ty[nb_voisins] = c->y;
+		tz[nb_voisins] = c->z;
+		tx[nb_voisins+1] = c->x-1;
+		ty[nb_voisins+1] = c->y;
+		tz[nb_voisins+1] = c->z;
 		nb_voisins = nb_voisins+2;
 	}
 	
 	/* On regarde les voisins possible en y */
-	if (y == 0) {
-		tx[nb_voisins] = x;
-		ty[nb_voisins] = y+1;
-		tz[nb_voisins] = z;
+	if (c->y == 0) {
+		tx[nb_voisins] = c->x;
+		ty[nb_voisins] = c->y+1;
+		tz[nb_voisins] = c->z;
 		nb_voisins++;
-	} else if (y == maze->length-1) {
-		tx[nb_voisins] = x;
-		ty[nb_voisins] = y-1;
-		tz[nb_voisins] = z;
+	} else if (c->y == maze->length-1) {
+		tx[nb_voisins] = c->x;
+		ty[nb_voisins] = c->y-1;
+		tz[nb_voisins] = c->z;
 		nb_voisins++;
 	} else {
-		tx[nb_voisins] = x;
-		ty[nb_voisins] = y+1;
-		tz[nb_voisins] = z;
-		tx[nb_voisins+1] = x;
-		ty[nb_voisins+1] = y-1;
-		tz[nb_voisins+1] = z;
+		tx[nb_voisins] = c->x;
+		ty[nb_voisins] = c->y+1;
+		tz[nb_voisins] = c->z;
+		tx[nb_voisins+1] = c->x;
+		ty[nb_voisins+1] = c->y-1;
+		tz[nb_voisins+1] = c->z;
 		nb_voisins = nb_voisins+2;
 	}
 	
 	/* On regarde les voisins possibles en z */
-	if (z == 0) {
-		tx[nb_voisins] = x;
-		ty[nb_voisins] = y;
-		tz[nb_voisins] = z+1;
+	if (c->z == 0) {
+		tx[nb_voisins] = c->x;
+		ty[nb_voisins] = c->y;
+		tz[nb_voisins] = c->z+1;
 		nb_voisins++;
-	} else if (z == maze->heigth-1) {
-		tx[nb_voisins] = x;
-		ty[nb_voisins] = y;
-		tz[nb_voisins] = z-1;
+	} else if (c->z == maze->heigth-1) {
+		tx[nb_voisins] = c->x;
+		ty[nb_voisins] = c->y;
+		tz[nb_voisins] = c->z-1;
 		nb_voisins++;
 	} else {
-		tx[nb_voisins] = x;
-		ty[nb_voisins] = y;
-		tz[nb_voisins] = z+1;
-		tx[nb_voisins+1] = x;
-		ty[nb_voisins+1] = y;
-		tz[nb_voisins+1] = z-1;
+		tx[nb_voisins] = c->x;
+		ty[nb_voisins] = c->y;
+		tz[nb_voisins] = c->z+1;
+		tx[nb_voisins+1] = c->x;
+		ty[nb_voisins+1] = c->y;
+		tz[nb_voisins+1] = c->z-1;
 		nb_voisins = nb_voisins+2;
 	}
 	
@@ -159,7 +155,57 @@ Cell* random_unvisited_neighbour(Maze *maze, int x, int y, int z) {
 	return &(maze->cases[tx[r]][ty[r]][tz[r]]);
 }
 
-void carve_maze(Maze *maze, Pile *p, int x, int y, int z) {
-	maze->cases[x][y][z].VISITED = 1;
+void remove_walls(Cell *c, Cell *v) {
+	/* Si le voisin de c est à gauche ou à droite */
+	if (v->x == c->x+1) {
+		v->MUR_GAUCHE = 0;
+		c->MUR_DROITE = 0;
+	} else if (v->x == c->x-1){
+		c->MUR_GAUCHE = 0;
+		v->MUR_DROITE = 0;
+	}
 	
+	/* Si le voisin de c est devant ou derrière */
+	if (v->y == c->y+1) {
+		v->MUR_AVANT = 0;
+		c->MUR_ARRIERE = 0;
+	} else if (v->y == c->y-1){
+		c->MUR_AVANT = 0;
+		v->MUR_ARRIERE = 0;
+	}
+	
+	/* Si le voisin de c est au dessus ou en dessous */
+	if (v->z == c->z+1) {
+		v->MUR_BAS = 0;
+		c->MUR_HAUT = 0;
+	} else if (v->z == c->z-1){
+		c->MUR_BAS = 0;
+		v->MUR_HAUT = 0;
+	}
+}
+
+void generate_maze(Maze *maze) {
+	srand(time(NULL));
+	Pile p;
+	initialiserPile(&p);
+	carve_maze(maze, &p, 0, 0, 0);
+}
+
+void carve_maze(Maze *maze, Pile *p, int x, int y, int z) {
+	Cell *courant = &(maze->cases[x][y][z]);
+	Cell *voisin;
+	
+	courant->VISITED = 1;
+	voisin = random_unvisited_neighbour(maze, courant);
+	if (voisin != NULL) {
+		empilerCell(p, courant);
+		remove_walls(courant, voisin);
+		carve_maze(maze, p, voisin->x, voisin->y, voisin->z);
+	} else {
+		if (!estVide(p)) {
+			voisin = accederSommet(p)->cell;
+			depiler(p);
+			carve_maze(maze, p, voisin->x, voisin->y, voisin->z);
+		}
+	}
 }
