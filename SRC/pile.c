@@ -22,7 +22,7 @@ void empilerCell(Pile *p, Cell *c) {
   e->cell = c;
   e->suivant = NULL;
 
-  if (p->debut == NULL) 
+  if (p->debut == NULL)
   {
     p->debut = e;
   }
@@ -40,17 +40,20 @@ void depiler(Pile *p) {
   {
     courant = p->debut;
     precedent = NULL;
-    while(courant != NULL)
+    while(courant->suivant != NULL)
     {
       precedent = courant;
       courant = precedent->suivant;
     }
+    free(courant);
+    p->nb_elem--;
     if (precedent != NULL)
     {
-      free(precedent->suivant);
       precedent->suivant = NULL;
       p->sommet = precedent;
-      p->nb_elem--;
+    } else {
+      p->debut = NULL;
+      p->sommet = NULL;
     }
   }
 }
