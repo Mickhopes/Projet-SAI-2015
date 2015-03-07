@@ -216,30 +216,38 @@ void show_maze(Maze *maze) {
     for(z = 0; z < maze->heigth; z++) {
 	    printf("Level %d:\n", z);
 	    for(y = 0; y < maze->length; y++) {
-            printf("___");
+            printf("____");
 	    }
 	    printf("\n");
         for(x = 0; x < maze->width; x++) {
             printf("|");
             for(y = 0; y < maze->length; y++) {
-                if (maze->cases[x][y][z].MUR_DROITE == 1) {
-                    printf("_");
-                } else {
-                    printf(" ");
-                }
-                if (maze->cases[x][y][z].MUR_BAS == 0 && maze->cases[x][y][z].MUR_HAUT == 0) {
-                    printf("X");
+        		if (maze->cases[x][y][z].MUR_BAS == 0 && maze->cases[x][y][z].MUR_HAUT == 0) {
+                    printf("  x");
                 } else if (maze->cases[x][y][z].MUR_BAS == 0) {
-                    printf("-");
+                    printf("  -");
                 } else if (maze->cases[x][y][z].MUR_HAUT == 0) {
-                    printf("+");
+                    printf("  +");
                 } else {
-                    printf(" ");
+                    printf("   ");
                 }
                 if (maze->cases[x][y][z].MUR_ARRIERE == 1) {
                     printf("|");
                 } else {
                     printf(" ");
+                }
+            }
+            printf("\n|");
+            for(y = 0; y < maze->length; y++) {
+        		if (maze->cases[x][y][z].MUR_DROITE == 1) {
+                    printf("___");
+                } else {
+                    printf("   ");
+                }
+                if (maze->cases[x][y][z].MUR_ARRIERE == 1) {
+                    printf("|");
+                } else {
+                    printf("_");
                 }
             }
             printf("\n");
