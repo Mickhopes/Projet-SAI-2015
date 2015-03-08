@@ -1,3 +1,14 @@
+/****************************************************
+ * L3 informatique
+ * Projet SAI
+ *
+ * Auteurs :  - Line Pouvaret
+ *            - Mickaël Turnel
+ *
+ * Fichier : main.c
+ *
+ *****************************************************/
+
 #include "maze.h"
 
 int main(int argc, char* argv[]) {
