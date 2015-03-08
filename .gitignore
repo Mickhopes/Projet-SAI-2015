@@ -24,6 +24,11 @@ obj
 OBJ
 bin
 
+# Fichiers codeblocks
+*.depend
+*.layout
+*.cbp
+
 # =========================
 # Operating System Files
 # =========================
