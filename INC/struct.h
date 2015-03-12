@@ -12,6 +12,12 @@
 #ifndef _STRUCT_
 #define _STRUCT_
 
+typedef struct Point {
+	int x;
+	int y;
+	int z;
+}Point;
+
 typedef struct Cell {
 	int x, y, z;
 	int MUR_HAUT;
