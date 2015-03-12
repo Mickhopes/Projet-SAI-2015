@@ -13,7 +13,7 @@
 
 int main(int argc, char* argv[]) {
 
-	if (! init_maze(&maze, 5, 5, 5) )
+	if (!init_maze(&maze, 5, 5, 5))
 		return EXIT_FAILURE;
 
 	generate_maze(&maze);
