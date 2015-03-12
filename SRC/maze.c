@@ -11,19 +11,19 @@
 
 #include "maze.h"
 
-int init_maze(Maze *maze, int width, int length, int heigth) {
+int init_maze(Maze *maze, int width, int length, int height) {
 	int i, j, k;
 
 	maze->width = width;
 	maze->length = length;
-	maze->heigth = heigth;
+	maze->height = height;
 
 	/* Première dimension */
 	if ((maze->cases = (Cell***)malloc(width*sizeof(Cell**))) == NULL) {
 		return 0;
 	}
 
-	for (i = 0; i < width; i++) {
+	for(i = 0; i < width; i++) {
 		/* Seconde dimension */
 		if ((maze->cases[i] = (Cell**)malloc(length*sizeof(Cell*))) == NULL) {
 			return 0;
@@ -31,11 +31,11 @@ int init_maze(Maze *maze, int width, int length, int heigth) {
 
 		for(j = 0; j < length; j++) {
 			/* Troisième dimension */
-			if ((maze->cases[i][j] = (Cell*)malloc(heigth*sizeof(Cell))) == NULL) {
+			if ((maze->cases[i][j] = (Cell*)malloc(height*sizeof(Cell))) == NULL) {
 				return 0;
 			}
 
-			for(k = 0; k < heigth; k++) {
+			for(k = 0; k < height; k++) {
 				/* On initialise tous les murs à 1 */
 				maze->cases[i][j][k].MUR_HAUT = 1;
 				maze->cases[i][j][k].MUR_BAS = 1;
@@ -119,7 +119,7 @@ Cell* random_unvisited_neighbour(Maze *maze, Cell *c) {
 		ty[nb_voisins] = c->y;
 		tz[nb_voisins] = c->z+1;
 		nb_voisins++;
-	} else if (c->z == maze->heigth-1) {
+	} else if (c->z == maze->height-1) {
 		tx[nb_voisins] = c->x;
 		ty[nb_voisins] = c->y;
 		tz[nb_voisins] = c->z-1;
@@ -186,17 +186,33 @@ void remove_walls(Cell *c, Cell *v) {
 
 void generate_maze(Maze *maze) {
 	srand(time(NULL));
+
+	/* On initialise la pile qui va servir à stocker nos chemins dans le labyrinthe */
 	Pile p;
 	initialiserPile(&p);
+
+	/* On lance l'algorithme récursif à partir de notre case initiale */
 	carve_maze(maze, &p, 0, 0, 0);
+
+	/* On enlève les murs nécessaires au batiment */
+	maze->cases[0][0][0].MUR_GAUCHE = 0;
+	maze->cases[maze->width-1][maze->length-1][maze->height-1].MUR_HAUT = 0;
 }
 
 void carve_maze(Maze *maze, Pile *p, int x, int y, int z) {
 	Cell *courant = &(maze->cases[x][y][z]);
 	Cell *voisin;
 
+    /* On met notre cellule courante visitée */
 	courant->VISITED = 1;
+
+	/* On essaie de récupérer un voisin non visité */
 	voisin = random_unvisited_neighbour(maze, courant);
+
+	/* Si il en existe, on empile la cellule actuelle, on supprime les murs entre celle ci et sa cellule voisine
+     * et on rappelle notre fonction avec la cellule voisine
+     * Sinon si notre pile est non vide on la dépile et on rappelle notre fonction avec le sommet de la pile
+     */
 	if (voisin != NULL) {
 		empilerCell(p, courant);
 		remove_walls(courant, voisin);
@@ -213,7 +229,7 @@ void carve_maze(Maze *maze, Pile *p, int x, int y, int z) {
 void show_maze(Maze *maze) {
     int x, y, z;
 
-    for(z = 0; z < maze->heigth; z++) {
+    for(z = 0; z < maze->height; z++) {
 	    printf("Level %d:\n", z);
 	    for(y = 0; y < maze->length; y++) {
             printf("____");

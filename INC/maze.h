@@ -22,7 +22,7 @@
 Maze maze;
 
 /* Initialisation du labyrinthe labyrinthe */
-int init_maze(Maze *maze, int width, int length, int heigth);
+int init_maze(Maze *maze, int width, int length, int height);
 
 /* Libération du labyrinthe */
 void free_maze(Maze *maze);

@@ -41,7 +41,7 @@ typedef struct Pile {
 }Pile;
 
 typedef struct Maze {
-	int width, length, heigth;
+	int width, length, height;
 	Cell*** cases;
 }Maze;
 
