@@ -13,7 +13,6 @@
 #define _PILE_
 
 #include "struct.h"
-#include "maze.h"
 
 void initialiserPile(Pile *p);
 

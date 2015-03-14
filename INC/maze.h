@@ -12,10 +12,6 @@
 #ifndef _MAZE_
 #define _MAZE_
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include "struct.h"
 #include "pile.h"
 
 /* variable labyrinthe */

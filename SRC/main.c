@@ -9,20 +9,13 @@
  *
  *****************************************************/
 
-#include <math.h>
-#include "GL/gl.h"
-#include "GL/glut.h"
+#include "inputs.h"
 #include "maze.h"
 
-#define TAILLE_CUBE 10
-
-void gererClavier(unsigned char touche, int x, int y);
 void affichage();
-void raffraichissement();
-
-Point obs, vis;
 
 int main(int argc, char* argv[]) {
+    pointeur = 0;
 
 	if (!init_maze(&maze, 5, 5, 5))
 		return EXIT_FAILURE;
@@ -41,18 +34,20 @@ int main(int argc, char* argv[]) {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
 
-	glutInitWindowSize(800, 600);
+	glutInitWindowSize(WIDTH, HEIGHT);
 	glutInitWindowPosition(50, 50);
 
 	glutCreateWindow("CrazyLaby");
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(70, (double)800/(double)600, 1, 800);
+	gluPerspective(70, (double)WIDTH/(double)HEIGHT, 1, 800);
 
 	glEnable(GL_DEPTH_TEST);
 
 	glutIdleFunc(raffraichissement);
     glutKeyboardFunc(gererClavier);
+    glutMotionFunc(vMotion);
+    glutPassiveMotionFunc(vMotion);
 	glutDisplayFunc(affichage);
 
 
@@ -61,44 +56,18 @@ int main(int argc, char* argv[]) {
 	return 0;
 }
 
-void gererClavier(unsigned char touche, int x, int y){
-    float vect_x, vect_z;
-
-    vect_x = (obs.x+vis.x) - obs.x;
-    vect_z = (obs.z+vis.z) - obs.z;
-
-    if(touche == 27){
-        free_maze(&maze);
-        exit(EXIT_SUCCESS);
-    } else if (touche == 'z') {
-        obs.x += vect_x;
-		obs.z += vect_z;
-    } else if (touche == 's') {
-        obs.x -= vect_x;
-		obs.z -= vect_z;
-    } else if (touche == 'd') {
-        obs.x -= vect_z;
-		obs.z += vect_x;
-    } else if (touche == 'q') {
-        obs.x += vect_z;
-		obs.z -= vect_x;
-    } else if (touche == 'y') {
-        vis.x = 1;
-        vis.y = 0;
-        vis.z = 0;
-    }
-}
-
-void raffraichissement() {
-    glutPostRedisplay();
-}
-
 void affichage(){
     int x,y,z;
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	gluLookAt(obs.x,obs.y,obs.z, obs.x+vis.x, obs.y+vis.y, obs.z+vis.z, 0, 1, 0);
+
+	if (pointeur) {
+        glutWarpPointer(WIDTH/2, HEIGHT/2);
+        glutSetCursor(GLUT_CURSOR_CROSSHAIR);
+        glutPostRedisplay();
+	}
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

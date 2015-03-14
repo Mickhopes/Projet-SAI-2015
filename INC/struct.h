@@ -12,6 +12,18 @@
 #ifndef _STRUCT_
 #define _STRUCT_
 
+#include "GL/gl.h"
+#include "GL/glut.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <math.h>
+
+#define WIDTH 800
+#define HEIGHT 600
+
+#define TAILLE_CUBE 20
+
 typedef struct Point {
 	int x;
 	int y;
@@ -44,5 +56,7 @@ typedef struct Maze {
 	int width, length, height;
 	Cell*** cases;
 }Maze;
+
+Point obs, vis;
 
 #endif /* _STRUCT_ */
