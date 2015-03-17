@@ -52,7 +52,7 @@ void vMotion(int x, int y) {
     float angle;
     float tx = (float)x - WIDTH/2;
 
-	angle = ((tx * 90) / WIDTH/2;
+	angle = (tx * 90) / WIDTH/2;
 
 	vis.x = cos(angle * M_PI / 180);
 
