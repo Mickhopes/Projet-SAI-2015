@@ -14,6 +14,8 @@
  void labyrinthe(Maze *maze) {
      int x, y, z;
 
+     glLineWidth(2.0);
+
     /* Sol */
     for(z = 0; z < maze->width; z++) {
         for(x = 0; x < maze->length; x++) {
@@ -27,14 +29,10 @@
 
             glBegin(GL_LINE_LOOP);
                 glColor3f(0, 0, 0);
-                glVertex3f(x*TAILLE_CUBE,0.05,z*TAILLE_CUBE);
-                glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,0.05,z*TAILLE_CUBE);
-                glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,0.05,z*TAILLE_CUBE+TAILLE_CUBE);
-                glVertex3f(x*TAILLE_CUBE,0.05,z*TAILLE_CUBE+TAILLE_CUBE);
-                glVertex3f(x*TAILLE_CUBE,-0.05,z*TAILLE_CUBE+TAILLE_CUBE);
-                glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,-0.05,z*TAILLE_CUBE+TAILLE_CUBE);
-                glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,-0.05,z*TAILLE_CUBE);
-                glVertex3f(x*TAILLE_CUBE,-0.05,z*TAILLE_CUBE);
+                glVertex3f(x*TAILLE_CUBE,0,z*TAILLE_CUBE);
+                glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,0,z*TAILLE_CUBE);
+                glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,0,z*TAILLE_CUBE+TAILLE_CUBE);
+                glVertex3f(x*TAILLE_CUBE,0,z*TAILLE_CUBE+TAILLE_CUBE);
             glEnd();
         }
     }
@@ -52,14 +50,10 @@
 
             glBegin(GL_LINE_LOOP);
                 glColor3f(0, 0, 0);
-                glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE,0.05);
-                glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE,0.05);
-                glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,0.05);
-                glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,0.05);
-                glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,-0.05);
-                glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,-0.05);
-                glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE,-0.05);
-                glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE,-0.05);
+                glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE,0);
+                glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE,0.);
+                glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,0);
+                glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,0);
             glEnd();
         }
     }
@@ -77,14 +71,10 @@
 
             glBegin(GL_LINE_LOOP);
                 glColor3f(0, 0, 0);
-                glVertex3f(0.05,y*TAILLE_CUBE,z*TAILLE_CUBE);
-                glVertex3f(0.05,y*TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
-                glVertex3f(0.05,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
-                glVertex3f(0.05,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
-                glVertex3f(-0.05,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
-                glVertex3f(-0.05,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
-                glVertex3f(-0.05,y*TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
-                glVertex3f(-0.05,y*TAILLE_CUBE,z*TAILLE_CUBE);
+                glVertex3f(0,y*TAILLE_CUBE,z*TAILLE_CUBE);
+                glVertex3f(0,y*TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
+                glVertex3f(0,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
+                glVertex3f(0,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
             glEnd();
         }
     }
@@ -103,14 +93,10 @@
 
                     glBegin(GL_LINE_LOOP);
                         glColor3f(0, 0, 0);
-                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE+0.05,y*TAILLE_CUBE,z*TAILLE_CUBE);
-                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE+0.05,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
-                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE+0.05,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
-                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE+0.05,y*TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
-                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE-0.05,y*TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
-                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE-0.05,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
-                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE-0.05,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
-                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE-0.05,y*TAILLE_CUBE,z*TAILLE_CUBE);
+                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE,z*TAILLE_CUBE);
+                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
+                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
+                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
                     glEnd();
                 }
                 if (maze->cases[z][x][y].MUR_DROITE == 1) {
@@ -124,14 +110,10 @@
 
                     glBegin(GL_LINE_LOOP);
                         glColor3f(0, 0, 0);
-                        glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE+0.05);
-                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE+0.05);
-                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE+0.05);
-                        glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE+0.05);
-                        glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE-0.05);
-                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE-0.05);
-                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE-0.05);
-                        glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE-0.05);
+                        glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
+                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
+                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
+                        glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
                     glEnd();
                 }
                 if (maze->cases[z][x][y].MUR_HAUT == 1) {
@@ -145,17 +127,15 @@
 
                     glBegin(GL_LINE_LOOP);
                         glColor3f(0, 0, 0);
-                        glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE+0.05,z*TAILLE_CUBE);
-                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE+0.05,z*TAILLE_CUBE);
-                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE+0.05,z*TAILLE_CUBE+TAILLE_CUBE);
-                        glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE+0.05,z*TAILLE_CUBE+TAILLE_CUBE);
-                        glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE-0.05,z*TAILLE_CUBE+TAILLE_CUBE);
-                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE-0.05,z*TAILLE_CUBE+TAILLE_CUBE);
-                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE-0.05,z*TAILLE_CUBE);
-                        glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE-0.05,z*TAILLE_CUBE);
+                        glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
+                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
+                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
+                        glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
                     glEnd();
                 }
             }
         }
     }
+
+    glLineWidth(1.0);
  }
