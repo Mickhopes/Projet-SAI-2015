@@ -22,7 +22,7 @@
 #define WIDTH 800
 #define HEIGHT 600
 
-#define TAILLE_CUBE 20
+#define TAILLE_CUBE 30
 
 typedef struct Point {
 	int x;
