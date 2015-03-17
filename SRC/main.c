@@ -24,9 +24,9 @@ int main(int argc, char* argv[]) {
 
 	show_maze(&maze);
 
-	obs.x = 0;
-	obs.y = 0;
-	obs.z = -60;
+	obs.x = TAILLE_CUBE/2;
+	obs.y = TAILLE_CUBE/4;
+	obs.z = TAILLE_CUBE/2;
 	vis.x = 0;
 	vis.y = 0;
 	vis.z = 1;
@@ -46,8 +46,8 @@ int main(int argc, char* argv[]) {
 
 	glutIdleFunc(raffraichissement);
     glutKeyboardFunc(gererClavier);
-    glutMotionFunc(vMotion);
-    glutPassiveMotionFunc(vMotion);
+    /*glutMotionFunc(vMotion);
+    glutPassiveMotionFunc(vMotion);*/
 	glutDisplayFunc(affichage);
 
 
@@ -59,14 +59,17 @@ int main(int argc, char* argv[]) {
 void affichage(){
     int x,y,z;
 
+    /*if (obs.z > (maze.width-1)*TAILLE_CUBE && obs.x > (maze.length-1)*TAILLE_CUBE && obs.y > (maze.height-1)*TAILLE_CUBE) {
+        printf("\nTu as réussi ! Bravo !\n");
+    }*/
+
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	gluLookAt(obs.x,obs.y,obs.z, obs.x+vis.x, obs.y+vis.y, obs.z+vis.z, 0, 1, 0);
 
+    glutSetCursor(GLUT_CURSOR_CROSSHAIR);
 	if (pointeur) {
         glutWarpPointer(WIDTH/2, HEIGHT/2);
-        glutSetCursor(GLUT_CURSOR_CROSSHAIR);
-        glutPostRedisplay();
 	}
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
