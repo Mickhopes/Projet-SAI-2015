@@ -67,14 +67,14 @@ void vMotion(int x, int y) {
 	printf("x: %.2d\n", x);
 }
 
-/* 
+/*
  * 0: aller en avant
  * 1: aller en arrière
  * 2: tourner à droite
  * 3: tourner à gauche
  * 4: aller en haut
  * 5: aller en bas
- */ 
+ */
 void deplacerCamera(int dir) {
     int x, y, z;
 
