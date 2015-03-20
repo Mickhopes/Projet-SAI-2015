@@ -11,6 +11,7 @@
 
 #include "inputs.h"
 #include "maze.h"
+#include "collision.h"
 
 int pointeur;
 
@@ -18,63 +19,90 @@ void raffraichissement() {
     glutPostRedisplay();
 }
 
-void gererClavier(unsigned char touche, int x, int y){
-    /*float vect_x, vect_z;
+void gererClavier(unsigned char touche, int x, int y) {
+    switch(touche) {
+        case 27:
+            free_maze(&maze);
+            exit(EXIT_SUCCESS);
+        case 'z':
+            tab_key[HAUT] = 1;
+            break;
+        case 's':
+            tab_key[BAS] = 1;
+            break;
+        case 'd':
+            tab_key[DROITE] = 1;
+            break;
+        case 'q':
+            tab_key[GAUCHE] = 1;
+            break;
+        case 32:
+            deplacerCamera(DESSUS);
+            break;
+        case 'c':
+            deplacerCamera(DESSOUS);
+            break;
+        case 'o':
+            pointeur = pointeur == 1 ? 0 : 1;
+        default:
+            break;
+    }
+}
 
-    vect_x = (obs.x+vis.x) - obs.x;
-    vect_z = (obs.z+vis.z) - obs.z;*/
-
-    if(touche == 27){
-        free_maze(&maze);
-        exit(EXIT_SUCCESS);
-    } else if (touche == 'z') {
-        /*obs.x += vect_x;
-		obs.z += vect_z;*/
-        deplacerCamera(0);
-    } else if (touche == 's') {
-        /*obs.x -= vect_x;
-		obs.z -= vect_z;*/
-        deplacerCamera(1);
-    } else if (touche == 'd') {
-        /*obs.x -= vect_z;
-		obs.z += vect_x;*/
-        deplacerCamera(2);
-    } else if (touche == 'q') {
-        /*obs.x += vect_z;
-		obs.z -= vect_x;*/
-        deplacerCamera(3);
-    } else if (touche == 32) {
-        deplacerCamera(4);
-    } else if (touche == 'c') {
-        deplacerCamera(5);
-    } else if (touche == 'y') {
-        /*vis.x = 1;
-        vis.y = 0;
-        vis.z = 0;*/
-    } else if (touche == 'o') {
-        pointeur = pointeur == 1 ? 0 : 1;
+void relacherClavier(unsigned char touche, int x, int y) {
+    switch(touche) {
+        case 'z':
+            tab_key[HAUT] = 0;
+            break;
+        case 's':
+            tab_key[BAS] = 0;
+            break;
+        case 'd':
+            tab_key[DROITE] = 0;
+            break;
+        case 'q':
+            tab_key[GAUCHE] = 0;
+            break;
+        case 32:
+            tab_key[DESSUS] = 0;
+            break;
+        case 'c':
+            tab_key[DESSOUS] = 0;
+            break;
+        default:
+            break;
     }
 }
 
 void vMotion(int x, int y) {
     float angle;
-    float tx = (float)x - WIDTH/2;
 
-	angle = (tx * 90) / WIDTH/2;
+    souris.x += 1.5*((float)x - WIDTH/2);
+
+	while(souris.x > 6480)
+		souris.x -= 6480;
+	while(souris.x < -6480)
+		souris.x += 6480;
+
+
+	angle = (souris.x * 90) / WIDTH/2;
 
 	vis.x = cos(angle * M_PI / 180);
+	vis.z = sin(angle * M_PI / 180);
 
-	printf("x: %.2d\n", x);
+	souris.y -= 1.5*((float)y - HEIGHT/2);
+
+	if(souris.y < -(HEIGHT/2)-359)
+		souris.y = -(HEIGHT/2)-359;
+
+	if(souris.y > (HEIGHT/2)+359)
+		souris.y = (HEIGHT/2)+359;
+
+	angle = (souris.y * 90) / HEIGHT/2;
+
+	vis.y = sin(angle * M_PI / 180);
 }
 
-/*
- * 0: aller en avant
- * 1: aller en arrière
- * 2: tourner à droite
- * 3: tourner à gauche
- * 4: aller en haut
- * 5: aller en bas
- */
 void deplacerCamera(int dir) {
     int x, y, z;
 
@@ -82,8 +110,7 @@ void deplacerCamera(int dir) {
     y = obs.x / TAILLE_CUBE;
     z = obs.y / TAILLE_CUBE;
 
-    /* On se déplace devant */
-    if (dir == 0) {
+    if (dir == HAUT) {
         /* On regarde la position du vecteur de vision */
         if (vis.z == 1 && x < maze.width-1 && maze.cases[x][y][z].MUR_DROITE == 0) {
             obs.z += TAILLE_CUBE;
@@ -97,9 +124,7 @@ void deplacerCamera(int dir) {
         if (vis.x == -1 && y > 0 && maze.cases[x][y][z].MUR_AVANT == 0) {
             obs.x -= TAILLE_CUBE;
         }
-    }
-    /* On se déplace en arrière */
-    else if (dir == 1) {
+    } else if (dir == BAS) {
         /* On regarde la position du vecteur de vision */
         if (vis.z == 1 && x > 0 && maze.cases[x][y][z].MUR_GAUCHE == 0) {
             obs.z -= TAILLE_CUBE;
@@ -113,9 +138,7 @@ void deplacerCamera(int dir) {
         if (vis.x == -1 && y < maze.length-1 && maze.cases[x][y][z].MUR_ARRIERE == 0) {
             obs.x += TAILLE_CUBE;
         }
-    }
-    /* On se tourne a droite */
-    else if (dir == 2) {
+    } else if (dir == DROITE) {
         if (vis.z == 1) {
             vis.z = 0;
             vis.x = -1;
@@ -129,9 +152,7 @@ void deplacerCamera(int dir) {
             vis.x = 0;
             vis.z = -1;
         }
-    }
-    /* On se tourne a gauche */
-    else if (dir == 3) {
+    } else if (dir == GAUCHE) {
         if (vis.z == 1) {
             vis.z = 0;
             vis.x = 1;
@@ -145,17 +166,73 @@ void deplacerCamera(int dir) {
             vis.x = 0;
             vis.z = 1;
         }
-    }
-    /* On se déplace en haut */
-    else if (dir == 4) {
+    } else if (dir == DESSUS) {
         if (z < maze.height-1 && maze.cases[x][y][z].MUR_HAUT == 0) {
             obs.y += TAILLE_CUBE;
         }
-    }
-    /* On se déplace en bas */
-    else if (dir == 5) {
+    } else if (dir == DESSOUS) {
         if (z > 0 && maze.cases[x][y][z].MUR_BAS == 0) {
             obs.y -= TAILLE_CUBE;
         }
+    }
+}
+
+void camera() {
+    float vect_x, vect_z;
+    Point test;
+
+    test.x = obs.x;
+    test.y = obs.y;
+    test.z = obs.z;
+
+    vect_x = (obs.x+vis.x) - obs.x;
+    vect_z = (obs.z+vis.z) - obs.z;
+
+    if (tab_key[HAUT]) {
+        test.x += vect_x;
+		test.z += vect_z;
+
+		if (!is_collision(test)) {
+            obs.x = test.x;
+            obs.z = test.z;
+		}
+    }
+
+    if (tab_key[BAS]) {
+        test.x -= vect_x;
+		test.z -= vect_z;
+
+		if (!is_collision(test)) {
+            obs.x = test.x;
+            obs.z = test.z;
+		}
+    }
+
+    if (tab_key[DROITE]) {
+        test.x -= vect_z;
+		test.z += vect_x;
+
+		if (!is_collision(test)) {
+            obs.x = test.x;
+            obs.z = test.z;
+		}
+    }
+
+    if (tab_key[GAUCHE]) {
+        test.x += vect_z;
+		test.z -= vect_x;
+
+		if (!is_collision(test)) {
+            obs.x = test.x;
+            obs.z = test.z;
+		}
+    }
+
+    if (tab_key[DESSUS]) {
+        deplacerCamera(DESSUS);
+    }
+
+    if (tab_key[DESSOUS]) {
+        deplacerCamera(DESSOUS);
     }
 }

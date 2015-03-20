@@ -16,7 +16,9 @@ extern int pointeur;
 
 void raffraichissement();
 void gererClavier(unsigned char touche, int x, int y);
+void relacherClavier(unsigned char touche, int x, int y);
 void vMotion(int x, int y);
 void deplacerCamera(int dir);
+void camera();
 
 #endif /* _INPUTS */
