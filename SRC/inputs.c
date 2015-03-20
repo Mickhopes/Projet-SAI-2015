@@ -44,6 +44,7 @@ void gererClavier(unsigned char touche, int x, int y) {
             break;
         case 'o':
             pointeur = pointeur == 1 ? 0 : 1;
+            break;
         default:
             break;
     }
@@ -168,11 +169,17 @@ void deplacerCamera(int dir) {
         }
     } else if (dir == DESSUS) {
         if (z < maze.height-1 && maze.cases[x][y][z].MUR_HAUT == 0) {
-            obs.y += TAILLE_CUBE;
+            /* Evite une collision avec le mur du dessus */
+            if (obs.z+5 < x*TAILLE_CUBE+TAILLE_CUBE && obs.z-5 > x*TAILLE_CUBE) {
+               obs.y += TAILLE_CUBE;
+            }
         }
     } else if (dir == DESSOUS) {
         if (z > 0 && maze.cases[x][y][z].MUR_BAS == 0) {
-            obs.y -= TAILLE_CUBE;
+            /* Evite une collision avec le mur du dessous */
+            if (obs.x+5 < y*TAILLE_CUBE+TAILLE_CUBE && obs.x-5 > y*TAILLE_CUBE) {
+               obs.y -= TAILLE_CUBE;
+            }
         }
     }
 }
