@@ -15,6 +15,8 @@
 
 void affichage();
 
+int pointeur;
+
 int main(int argc, char* argv[]) {
     pointeur = 0;
 
@@ -47,8 +49,9 @@ int main(int argc, char* argv[]) {
 
 	glutIdleFunc(raffraichissement);
     glutKeyboardFunc(gererClavier);
-    /*glutMotionFunc(vMotion);
-    glutPassiveMotionFunc(vMotion);*/
+    glutKeyboardUpFunc(relacherClavier);
+    glutMotionFunc(vMotion);
+    glutPassiveMotionFunc(vMotion);
 	glutDisplayFunc(affichage);
 
 	glutMainLoop();
@@ -57,18 +60,22 @@ int main(int argc, char* argv[]) {
 }
 
 void affichage() {
-    /*if (obs.z > (maze.width-1)*TAILLE_CUBE && obs.x > (maze.length-1)*TAILLE_CUBE && obs.y > (maze.height-1)*TAILLE_CUBE) {
+    camera();
+
+    if (obs.z > (maze.width-1)*TAILLE_CUBE && obs.x > (maze.length-1)*TAILLE_CUBE && obs.y > (maze.height-1)*TAILLE_CUBE) {
         printf("\nTu as réussi ! Bravo !\n");
-    }*/
+        free_maze(&maze);
+        exit(EXIT_SUCCESS);
+    }
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	gluLookAt(obs.x,obs.y,obs.z, obs.x+vis.x, obs.y+vis.y, obs.z+vis.z, 0, 1, 0);
 
     glutSetCursor(GLUT_CURSOR_CROSSHAIR);
-	if (pointeur) {
+    if (pointeur) {
         glutWarpPointer(WIDTH/2, HEIGHT/2);
-	}
+    }
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
