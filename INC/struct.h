@@ -22,12 +22,19 @@
 #define WIDTH 800
 #define HEIGHT 600
 
+#define HAUT 0
+#define BAS 1
+#define DROITE 2
+#define GAUCHE 3
+#define DESSUS 4
+#define DESSOUS 5
+
 #define TAILLE_CUBE 30
 
 typedef struct Point {
-	int x;
-	int y;
-	int z;
+	float x;
+	float y;
+	float z;
 }Point;
 
 typedef struct Cell {
@@ -57,6 +64,8 @@ typedef struct Maze {
 	Cell*** cases;
 }Maze;
 
-Point obs, vis;
+Point obs, vis, souris;
+
+int tab_key[6];
 
 #endif /* _STRUCT_ */
