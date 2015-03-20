@@ -73,9 +73,7 @@ void affichage() {
 	gluLookAt(obs.x,obs.y,obs.z, obs.x+vis.x, obs.y+vis.y, obs.z+vis.z, 0, 1, 0);
 
     glutSetCursor(GLUT_CURSOR_CROSSHAIR);
-    if (pointeur) {
-        glutWarpPointer(WIDTH/2, HEIGHT/2);
-    }
+    glutWarpPointer(WIDTH/2, HEIGHT/2);
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
