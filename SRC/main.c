@@ -20,7 +20,7 @@ int pointeur;
 int main(int argc, char* argv[]) {
     pointeur = 0;
 
-	if (!init_maze(&maze, 5, 5, 5))
+	if (!init_maze(&maze, TAILLE_LABY, TAILLE_LABY, TAILLE_LABY))
 		return EXIT_FAILURE;
 
 	generate_maze(&maze);

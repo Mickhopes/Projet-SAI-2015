@@ -11,6 +11,8 @@
 
 #include "maze.h"
 
+int level;
+
 int init_maze(Maze *maze, int width, int length, int height) {
 	int i, j, k;
 
@@ -113,26 +115,29 @@ Cell* random_unvisited_neighbour(Maze *maze, Cell *c) {
 		nb_voisins = nb_voisins+2;
 	}
 
-	/* On regarde les voisins possibles en z */
-	if (c->z == 0) {
-		tx[nb_voisins] = c->x;
-		ty[nb_voisins] = c->y;
-		tz[nb_voisins] = c->z+1;
-		nb_voisins++;
-	} else if (c->z == maze->height-1) {
-		tx[nb_voisins] = c->x;
-		ty[nb_voisins] = c->y;
-		tz[nb_voisins] = c->z-1;
-		nb_voisins++;
-	} else {
-		tx[nb_voisins] = c->x;
-		ty[nb_voisins] = c->y;
-		tz[nb_voisins] = c->z+1;
-		tx[nb_voisins+1] = c->x;
-		ty[nb_voisins+1] = c->y;
-		tz[nb_voisins+1] = c->z-1;
-		nb_voisins = nb_voisins+2;
-	}
+	/* Si on a parcouru CASES_MIN cases et qu'on a pas déjà STAIRS_MAX passerelles entre deux niveaux */
+    if(count[level] >= CASES_MIN && stairs[level] < STAIRS_MAX){
+        /* On regarde les voisins possibles en z */
+        if (c->z == 0) {
+            tx[nb_voisins] = c->x;
+            ty[nb_voisins] = c->y;
+            tz[nb_voisins] = c->z+1;
+            nb_voisins++;
+        } else if (c->z == maze->height-1) {
+            tx[nb_voisins] = c->x;
+            ty[nb_voisins] = c->y;
+            tz[nb_voisins] = c->z-1;
+            nb_voisins++;
+        } else {
+            tx[nb_voisins] = c->x;
+            ty[nb_voisins] = c->y;
+            tz[nb_voisins] = c->z+1;
+            tx[nb_voisins+1] = c->x;
+            ty[nb_voisins+1] = c->y;
+            tz[nb_voisins+1] = c->z-1;
+            nb_voisins = nb_voisins+2;
+        }
+    }
 
 	/* On regarde si tous les voisins ont été visité */
 	all_visited = 0;
@@ -151,6 +156,17 @@ Cell* random_unvisited_neighbour(Maze *maze, Cell *c) {
 	do {
 		r = rand()%nb_voisins;
 	} while(maze->cases[tx[r]][ty[r]][tz[r]].VISITED == 1);
+
+    /* la case c courante est en dessous de la case random */
+    if(c->z == tz[r]-1){
+        count[level] = 0;
+        stairs[level]++;
+        level++;
+    }
+    else if(c->z == tz[r]+1){
+        count[level] = 0;
+        level--;
+    }
 
 	return &(maze->cases[tx[r]][ty[r]][tz[r]]);
 }
@@ -185,7 +201,16 @@ void remove_walls(Cell *c, Cell *v) {
 }
 
 void generate_maze(Maze *maze) {
+    int i;
+    level = 0;
+
 	srand(time(NULL));
+
+    /* On initialise nos tableaux */
+    for(i = 0;i<TAILLE_LABY;i++){
+        count[i] = 0;
+        stairs[i] = 0;
+    }
 
 	/* On initialise la pile qui va servir à stocker nos chemins dans le labyrinthe */
 	Pile p;
@@ -214,6 +239,8 @@ void carve_maze(Maze *maze, Pile *p, int x, int y, int z) {
      * Sinon si notre pile est non vide on la dépile et on rappelle notre fonction avec le sommet de la pile
      */
 	if (voisin != NULL) {
+	    /* on avance d'une case */
+	    count[level]++;
 		empilerCell(p, courant);
 		remove_walls(courant, voisin);
 		carve_maze(maze, p, voisin->x, voisin->y, voisin->z);
@@ -227,7 +254,7 @@ void carve_maze(Maze *maze, Pile *p, int x, int y, int z) {
 }
 
 void show_maze(Maze *maze) {
-    int x, y, z;
+    int x, y, z, i;
 
     for(z = 0; z < maze->height; z++) {
 	    printf("Level %d:\n", z);
@@ -269,5 +296,9 @@ void show_maze(Maze *maze) {
             printf("\n");
         }
         printf("\n");
+	}
+
+	for(i = 0;i<TAILLE_LABY;i++){
+        printf("%d %d\n", count[i], stairs[i]);
 	}
 }
