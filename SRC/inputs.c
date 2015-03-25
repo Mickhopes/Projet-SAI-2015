@@ -16,6 +16,23 @@
 int pointeur;
 
 void raffraichissement() {
+    if(tab_key[DESSUS] != -1){
+        if(obs.y < tab_key[DESSUS]*TAILLE_CUBE +TAILLE_CUBE/4){
+            obs.y += 1;
+        }
+        else{
+            tab_key[DESSUS] = -1;
+        }
+
+    }
+    if(tab_key[DESSOUS] != -1){
+        if(obs.y > tab_key[DESSOUS]*TAILLE_CUBE +TAILLE_CUBE/4){
+            obs.y -= 1;
+        }
+        else{
+            tab_key[DESSOUS] = -1;
+        }
+    }
     glutPostRedisplay();
 }
 
@@ -37,9 +54,11 @@ void gererClavier(unsigned char touche, int x, int y) {
             tab_key[GAUCHE] = 1;
             break;
         case 32:
+            //tab_key[DESSUS] = 1;
             deplacerCamera(DESSUS);
             break;
         case 'c':
+            //tab_key[DESSOUS] = 1;
             deplacerCamera(DESSOUS);
             break;
         case 'o':
@@ -65,10 +84,10 @@ void relacherClavier(unsigned char touche, int x, int y) {
             tab_key[GAUCHE] = 0;
             break;
         case 32:
-            tab_key[DESSUS] = 0;
+          //  tab_key[DESSUS] = 0;
             break;
         case 'c':
-            tab_key[DESSOUS] = 0;
+           // tab_key[DESSOUS] = 0;
             break;
         default:
             break;
@@ -105,7 +124,7 @@ void vMotion(int x, int y) {
 }
 
 void deplacerCamera(int dir) {
-    int x, y, z;
+    int x, y, z, i;
 
     x = obs.z / TAILLE_CUBE;
     y = obs.x / TAILLE_CUBE;
@@ -171,21 +190,21 @@ void deplacerCamera(int dir) {
         if (z < maze.height-1 && maze.cases[x][y][z].MUR_HAUT == 0) {
             /* Evite une collision avec le mur du dessus */
             if (obs.z+5 < x*TAILLE_CUBE+TAILLE_CUBE && obs.z-5 > x*TAILLE_CUBE) {
-               obs.y += TAILLE_CUBE;
+               tab_key[DESSUS] = z+1;
             }
         }
     } else if (dir == DESSOUS) {
         if (z > 0 && maze.cases[x][y][z].MUR_BAS == 0) {
             /* Evite une collision avec le mur du dessous */
             if (obs.x+5 < y*TAILLE_CUBE+TAILLE_CUBE && obs.x-5 > y*TAILLE_CUBE) {
-               obs.y -= TAILLE_CUBE;
+               tab_key[DESSOUS] = z-1;
             }
         }
     }
 }
 
 void camera() {
-    float vect_x, vect_z;
+    float vect_x, vect_z, vect_y;
     Point test;
 
     test.x = obs.x;
@@ -194,6 +213,7 @@ void camera() {
 
     vect_x = (obs.x+vis.x) - obs.x;
     vect_z = (obs.z+vis.z) - obs.z;
+    vect_y = 1;
 
     if (tab_key[HAUT]) {
         test.x += vect_x;
@@ -236,10 +256,17 @@ void camera() {
     }
 
     if (tab_key[DESSUS]) {
-        deplacerCamera(DESSUS);
+       /* test.y += vect_y;
+        if(!is_collision(test)){
+            obs.y = test.y;
+        }*/
     }
 
     if (tab_key[DESSOUS]) {
-        deplacerCamera(DESSOUS);
+       /* test.y -= vect_y;
+        if(!is_collision(test)){
+            obs.y = test.y;
+        }*/
     }
+
 }
