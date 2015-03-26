@@ -124,7 +124,7 @@ void vMotion(int x, int y) {
 }
 
 void deplacerCamera(int dir) {
-    int x, y, z, i;
+    int x, y, z;
 
     x = obs.z / TAILLE_CUBE;
     y = obs.x / TAILLE_CUBE;
@@ -187,24 +187,28 @@ void deplacerCamera(int dir) {
             vis.z = 1;
         }
     } else if (dir == DESSUS) {
-        if (z < maze.height-1 && maze.cases[x][y][z].MUR_HAUT == 0) {
-            /* Evite une collision avec le mur du dessus */
-            if (obs.z+5 < x*TAILLE_CUBE+TAILLE_CUBE && obs.z-5 > x*TAILLE_CUBE) {
-               tab_key[DESSUS] = z+1;
+        if (obs.z > 0 && obs.z < maze.width*TAILLE_CUBE && obs.x > 0 && obs.x < maze.width*TAILLE_CUBE && obs.y > 0 && obs.y < maze.height*TAILLE_CUBE) {
+            if (z < maze.height-1 && maze.cases[x][y][z].MUR_HAUT == 0) {
+                /* Evite une collision avec le mur du dessus */
+                if (obs.z+5 < x*TAILLE_CUBE+TAILLE_CUBE && obs.z-5 > x*TAILLE_CUBE) {
+                   tab_key[DESSUS] = z+1;
+                }
             }
         }
     } else if (dir == DESSOUS) {
-        if (z > 0 && maze.cases[x][y][z].MUR_BAS == 0) {
-            /* Evite une collision avec le mur du dessous */
-            if (obs.x+5 < y*TAILLE_CUBE+TAILLE_CUBE && obs.x-5 > y*TAILLE_CUBE) {
-               tab_key[DESSOUS] = z-1;
+        if (obs.z > 0 && obs.z < maze.width*TAILLE_CUBE && obs.x > 0 && obs.x < maze.width*TAILLE_CUBE && obs.y > 0 && obs.y < maze.height*TAILLE_CUBE) {
+            if (z > 0 && maze.cases[x][y][z].MUR_BAS == 0) {
+                /* Evite une collision avec le mur du dessous */
+                if (obs.x+5 < y*TAILLE_CUBE+TAILLE_CUBE && obs.x-5 > y*TAILLE_CUBE) {
+                   tab_key[DESSOUS] = z-1;
+                }
             }
         }
     }
 }
 
 void camera() {
-    float vect_x, vect_z, vect_y;
+    float vect_x, vect_z/*, vect_y*/;
     Point test;
 
     test.x = obs.x;
@@ -213,7 +217,7 @@ void camera() {
 
     vect_x = (obs.x+vis.x) - obs.x;
     vect_z = (obs.z+vis.z) - obs.z;
-    vect_y = 1;
+    /*vect_y = 1;*/
 
     if (tab_key[HAUT]) {
         test.x += vect_x;
