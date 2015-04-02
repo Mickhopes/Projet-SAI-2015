@@ -16,5 +16,7 @@
 #include "maze.h"
 
 void labyrinthe(Maze *maze);
+void fleche_montee(int x, int y, int z);
+void fleche_descente(int x, int y, int z);
 
 #endif /* _OBJECTS_ */
