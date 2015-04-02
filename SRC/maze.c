@@ -159,12 +159,12 @@ Cell* random_unvisited_neighbour(Maze *maze, Cell *c) {
 
     /* la case c courante est en dessous de la case random */
     if(c->z == tz[r]-1){
-        count[level] = 0;
+        //count[level] = 0;
         stairs[level]++;
         level++;
     }
     else if(c->z == tz[r]+1){
-        count[level] = 0;
+        //count[level] = 0;
         level--;
     }
 
