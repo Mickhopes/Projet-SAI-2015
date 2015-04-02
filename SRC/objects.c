@@ -164,11 +164,11 @@
                 }
                 /* On dessine l'indicateur de montée */
                 if (maze->cases[z][x][y].MUR_HAUT == 0) {
-                    fleche_montee(z, x, y);
+                    fleche_montee(x, y, z);
                 }
                 /* On dessine l'indicateur de descente */
                 if (maze->cases[z][x][y].MUR_BAS == 0) {
-                    fleche_descente(z, x, y);
+                    fleche_descente(x, y, z);
                 }
             }
         }
@@ -187,10 +187,10 @@ void fleche_montee(int x, int y, int z) {
 
         glBegin(GL_QUADS);
             glColor3f(0,1,0);
-            glVertex3f(tz-0.01,tx-1.5,ty-3);
-            glVertex3f(tz-0.01,tx-1.5,ty);
-            glVertex3f(tz-0.01,tx+1.5,ty);
-            glVertex3f(tz-0.01,tx+1.5,ty-3);
+            glVertex3f(tx-1.5,ty-3,tz-0.01);
+            glVertex3f(tx-1.5,ty,tz-0.01);
+            glVertex3f(tx+1.5,ty,tz-0.01);
+            glVertex3f(tx+1.5,ty-3,tz-0.01);
         glEnd();
 
         glBegin(GL_QUADS);
