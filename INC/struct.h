@@ -42,6 +42,13 @@ typedef struct Point {
 	float z;
 }Point;
 
+typedef struct Ascenceur {
+	int x;
+	int y;
+	int z;
+	int en_mouvement;
+}Ascenceur;
+
 typedef struct Cell {
 	int x, y, z;
 	int MUR_HAUT;
@@ -76,5 +83,7 @@ int count[TAILLE_LABY];
 int stairs[TAILLE_LABY];
 
 int tab_key[6];
+
+Ascenceur a;
 
 #endif /* _STRUCT_ */

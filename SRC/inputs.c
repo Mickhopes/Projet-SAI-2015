@@ -22,6 +22,7 @@ void raffraichissement() {
         }
         else{
             tab_key[DESSUS] = -1;
+            a.en_mouvement = 0;
         }
 
     }
@@ -31,6 +32,7 @@ void raffraichissement() {
         }
         else{
             tab_key[DESSOUS] = -1;
+            a.en_mouvement = 0;
         }
     }
     glutPostRedisplay();
@@ -189,6 +191,10 @@ void deplacerCamera(int dir) {
                 /* Evite une collision avec le mur du dessus */
                 if (obs.z+5 < x*TAILLE_CUBE+TAILLE_CUBE && obs.z-5 > x*TAILLE_CUBE) {
                    tab_key[DESSUS] = z+1;
+                   a.x = x;
+                   a.y = y;
+                   a.z = z;
+                   a.en_mouvement = 1;
                 }
             }
         }
@@ -198,6 +204,10 @@ void deplacerCamera(int dir) {
                 /* Evite une collision avec le mur du dessous */
                 if (obs.x+5 < y*TAILLE_CUBE+TAILLE_CUBE && obs.x-5 > y*TAILLE_CUBE) {
                    tab_key[DESSOUS] = z-1;
+                   a.x = x;
+                   a.y = y;
+                   a.z = z-1;
+                   a.en_mouvement = 1;
                 }
             }
         }
