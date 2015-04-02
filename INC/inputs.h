@@ -12,8 +12,6 @@
 #ifndef _INPUTS_
 #define _INPUTS_
 
-extern int pointeur;
-
 void raffraichissement();
 void gererClavier(unsigned char touche, int x, int y);
 void relacherClavier(unsigned char touche, int x, int y);

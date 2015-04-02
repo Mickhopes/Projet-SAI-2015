@@ -15,8 +15,6 @@
 
 void affichage();
 
-int pointeur;
-
 int main(int argc, char* argv[]) {
     pointeur = 0;
 

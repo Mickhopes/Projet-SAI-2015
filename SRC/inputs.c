@@ -61,9 +61,6 @@ void gererClavier(unsigned char touche, int x, int y) {
             //tab_key[DESSOUS] = 1;
             deplacerCamera(DESSOUS);
             break;
-        case 'o':
-            pointeur = pointeur == 1 ? 0 : 1;
-            break;
         default:
             break;
     }
