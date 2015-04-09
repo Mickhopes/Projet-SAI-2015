@@ -12,9 +12,9 @@
  #include "objects.h"
 
  void labyrinthe(Maze *maze) {
-     int x, y, z;
+    int x, y, z;
 
-     glLineWidth(2.0);
+    glLineWidth(2.0);
 
     /* Sol */
     for(z = 0; z < maze->width; z++) {
@@ -88,6 +88,7 @@
     for(z = 0; z < maze->width; z++){
         for(x = 0; x < maze->length; x++){
             for(y = 0; y < maze->height; y++){
+                glLineWidth(2.0);
                 /* On dessine le mur arrière */
                 if (maze->cases[z][x][y].MUR_ARRIERE == 1) {
                     glBegin(GL_QUADS);
@@ -164,11 +165,11 @@
                 }
                 /* On dessine l'indicateur de montée */
                 if (maze->cases[z][x][y].MUR_HAUT == 0) {
-                    fleche_montee(x, y, z);
+                    mettre_fleche_montee(z, x, y);
                 }
                 /* On dessine l'indicateur de descente */
                 if (maze->cases[z][x][y].MUR_BAS == 0) {
-                    fleche_descente(x, y, z);
+                    mettre_fleche_descente(x, y, z);
                 }
             }
         }
@@ -177,78 +178,222 @@
     glLineWidth(1.0);
  }
 
-void fleche_montee(int x, int y, int z) {
-    int tx, ty, tz;
+void mettre_fleche_montee(int z, int x, int y) {
+    float tx, ty, tz;
+    float rotate = -1.0;
+
     /* On dessinera si possible les indicateurs sur ce mur */
     if (maze.cases[z][x][y].MUR_DROITE == 1) {
-        tz = x*TAILLE_CUBE+TAILLE_CUBE;
-        tx = y*TAILLE_CUBE+TAILLE_CUBE/2;
-        ty = z*TAILLE_CUBE+TAILLE_CUBE/2;
-
-        glBegin(GL_QUADS);
-            glColor3f(0,1,0);
-            glVertex3f(tx-1.5,ty-3,tz-0.01);
-            glVertex3f(tx-1.5,ty,tz-0.01);
-            glVertex3f(tx+1.5,ty,tz-0.01);
-            glVertex3f(tx+1.5,ty-3,tz-0.01);
-        glEnd();
-
-        glBegin(GL_QUADS);
-            glColor3f(0,1,0);
-            glVertex3f(tz-1.01,tx-1.5,ty-3);
-            glVertex3f(tz-1.01,tx-1.5,ty);
-            glVertex3f(tz-1.01,tx+1.5,ty);
-            glVertex3f(tz-1.01,tx+1.5,ty-3);
-        glEnd();
-
-        glBegin(GL_QUADS);
-            glColor3f(0,1,0);
-            glVertex3f(tz-0.01,tx-1.5,ty-3);
-            glVertex3f(tz-1.01,tx-1.5,ty-3);
-            glVertex3f(tz-1.01,tx-1.5,ty);
-            glVertex3f(tz-0.01,tx-1.5,ty);
-        glEnd();
-
-        glBegin(GL_QUADS);
-            glColor3f(0,1,0);
-            glVertex3f(tz-0.01,tx-1.5,ty-3);
-            glVertex3f(tz-1.01,tx-1.5,ty-3);
-            glVertex3f(tz-1.01,tx+1.5,ty-3);
-            glVertex3f(tz-0.01,tx+1.5,ty-3);
-        glEnd();
-
-        glBegin(GL_QUADS);
-            glColor3f(0,1,0);
-            glVertex3f(tz-0.01,tx+1.5,ty-3);
-            glVertex3f(tz-1.01,tx+1.5,ty-3);
-            glVertex3f(tz-1.01,tx+1.5,ty);
-            glVertex3f(tz-0.01,tx+1.5,ty);
-        glEnd();
-
-        glBegin(GL_QUADS);
-            glColor3f(0,1,0);
-            glVertex3f(tz-0.01,tx-1.5,ty);
-            glVertex3f(tz-1.01,tx-1.5,ty);
-            glVertex3f(tz-1.01,tx+1.5,ty);
-            glVertex3f(tz-0.01,tx+1.5,ty);
-        glEnd();
+        tx = x*TAILLE_CUBE+TAILLE_CUBE/2;
+        ty = y*TAILLE_CUBE+TAILLE_CUBE/2;
+        tz = z*TAILLE_CUBE+TAILLE_CUBE;
     } else {
         /* Sinon on prendra le mur suivant */
         if (maze.cases[x][y][z].MUR_AVANT == 1) {
-
+            tx = x*TAILLE_CUBE;
+            ty = y*TAILLE_CUBE+TAILLE_CUBE/2;
+            tz = z*TAILLE_CUBE+TAILLE_CUBE/2;
+            rotate = -90.0;
         } else {
             /* etc... */
             if (maze.cases[x][y][z].MUR_GAUCHE == 1) {
-
+                tx = x*TAILLE_CUBE+TAILLE_CUBE/2;
+                ty = y*TAILLE_CUBE+TAILLE_CUBE/2;
+                tz = z*TAILLE_CUBE;
+                rotate = 180.0;
             } else {
                 if (maze.cases[x][y][z].MUR_ARRIERE == 1) {
-
+                    tx = x*TAILLE_CUBE+TAILLE_CUBE;
+                    ty = y*TAILLE_CUBE+TAILLE_CUBE/2;
+                    tz = z*TAILLE_CUBE+TAILLE_CUBE/2;
+                    rotate = 90.0;
                 }
             }
         }
     }
+
+    glPushMatrix();
+    glTranslatef(tx, ty, tz);
+    if (rotate != -1.0) {
+        glRotatef(rotate, 0, 1.0, 0);
+    }
+    fleche_montee();
+    glPopMatrix();
 }
 
-void fleche_descente(int x, int y, int z) {
+void mettre_fleche_descente(int x, int y, int z) {
+    float tx, ty, tz;
+    float rotate = -1.0;
 
+    /* On dessinera si possible les indicateurs sur ce mur */
+    if (maze.cases[z][x][y].MUR_DROITE == 1) {
+        tx = x*TAILLE_CUBE+TAILLE_CUBE/2;
+        ty = y*TAILLE_CUBE+TAILLE_CUBE/2;
+        tz = z*TAILLE_CUBE+TAILLE_CUBE;
+    } else {
+        /* Sinon on prendra le mur suivant */
+        if (maze.cases[x][y][z].MUR_AVANT == 1) {
+            tx = x*TAILLE_CUBE;
+            ty = y*TAILLE_CUBE+TAILLE_CUBE/2;
+            tz = z*TAILLE_CUBE+TAILLE_CUBE/2;
+            rotate = -90.0;
+        } else {
+            /* etc... */
+            if (maze.cases[x][y][z].MUR_GAUCHE == 1) {
+                tx = x*TAILLE_CUBE+TAILLE_CUBE/2;
+                ty = y*TAILLE_CUBE+TAILLE_CUBE/2;
+                tz = z*TAILLE_CUBE;
+                rotate = 180.0;
+            } else {
+                if (maze.cases[x][y][z].MUR_ARRIERE == 1) {
+                    tx = x*TAILLE_CUBE+TAILLE_CUBE;
+                    ty = y*TAILLE_CUBE+TAILLE_CUBE/2;
+                    tz = z*TAILLE_CUBE+TAILLE_CUBE/2;
+                    rotate = 90.0;
+                }
+            }
+        }
+    }
+
+    glPushMatrix();
+    glTranslatef(tx, ty, tz);
+    if (rotate != -1.0) {
+        glRotatef(rotate, 0, 1.0, 0);
+    }
+    fleche_descente();
+    glPopMatrix();
+}
+
+void fleche_montee() {
+    glLineWidth(1.1);
+
+    glBegin(GL_QUADS);
+        glColor3f(0,1,0);
+        glVertex3f(-1.5,-3,-1);
+        glVertex3f(-1.5,0,-1);
+        glVertex3f(1.5,0,-1);
+        glVertex3f(1.5,-3,-1);
+    glEnd();
+
+    glBegin(GL_QUADS);
+        glColor3f(0,1,0);
+        glVertex3f(-1.5,-3,-0.1);
+        glVertex3f(-1.5,-3,-1);
+        glVertex3f(-1.5,0,-1);
+        glVertex3f(-1.5,0,-0.1);
+    glEnd();
+
+    glBegin(GL_QUADS);
+        glColor3f(0,1,0);
+        glVertex3f(1.5,-3,-0.1);
+        glVertex3f(1.5,-3,-1);
+        glVertex3f(1.5,0,-1);
+        glVertex3f(1.5,0,-0.1);
+    glEnd();
+
+    glBegin(GL_QUADS);
+        glColor3f(0,1,0);
+        glVertex3f(-1.5,-3,-0.1);
+        glVertex3f(-1.5,-3,-1);
+        glVertex3f(1.5,-3,-1);
+        glVertex3f(1.5,-3,-0.1);
+    glEnd();
+
+    glBegin(GL_QUADS);
+        glColor3f(0,1,0);
+        glVertex3f(-2.5,0,-1);
+        glVertex3f(2.5,0,-1);
+        glVertex3f(0,3,-1);
+        glVertex3f(0,3,-1);
+    glEnd();
+
+    glBegin(GL_QUADS);
+        glColor3f(0,1,0);
+        glVertex3f(-2.5,0,-1);
+        glVertex3f(-2.5,0,-0.1);
+        glVertex3f(2.5,0,-0.1);
+        glVertex3f(2.5,0,-1);
+    glEnd();
+
+    glBegin(GL_QUADS);
+        glColor3f(0,1,0);
+        glVertex3f(-2.5,0,-1);
+        glVertex3f(0,3,-1);
+        glVertex3f(0,3,-0.1);
+        glVertex3f(-2.5,0,-0.1);
+    glEnd();
+
+    glBegin(GL_QUADS);
+        glColor3f(0,1,0);
+        glVertex3f(2.5,0,-1);
+        glVertex3f(0,3,-1);
+        glVertex3f(0,3,-0.1);
+        glVertex3f(2.5,0,-0.1);
+    glEnd();
+}
+
+void fleche_descente() {
+    glBegin(GL_QUADS);
+        glColor3f(0,1,0);
+        glVertex3f(-1.5,0,-1);
+        glVertex3f(-1.5,3,-1);
+        glVertex3f(1.5,3,-1);
+        glVertex3f(1.5,0,-1);
+    glEnd();
+
+    glBegin(GL_QUADS);
+        glColor3f(0,1,0);
+        glVertex3f(-1.5,0,-0.1);
+        glVertex3f(-1.5,0,-1);
+        glVertex3f(-1.5,3,-1);
+        glVertex3f(-1.5,3,-0.1);
+    glEnd();
+
+    glBegin(GL_QUADS);
+        glColor3f(0,1,0);
+        glVertex3f(1.5,0,-0.1);
+        glVertex3f(1.5,0,-1);
+        glVertex3f(1.5,3,-1);
+        glVertex3f(1.5,3,-0.1);
+    glEnd();
+
+    glBegin(GL_QUADS);
+        glColor3f(0,1,0);
+        glVertex3f(-1.5,3,-0.1);
+        glVertex3f(-1.5,3,-1);
+        glVertex3f(1.5,3,-1);
+        glVertex3f(1.5,3,-0.1);
+    glEnd();
+
+    glBegin(GL_QUADS);
+        glColor3f(0,1,0);
+        glVertex3f(-2.5,0,-1);
+        glVertex3f(2.5,0,-1);
+        glVertex3f(0,-3,-1);
+        glVertex3f(0,-3,-1);
+    glEnd();
+
+    glBegin(GL_QUADS);
+        glColor3f(0,1,0);
+        glVertex3f(-2.5,0,-1);
+        glVertex3f(-2.5,0,-0.1);
+        glVertex3f(2.5,0,-0.1);
+        glVertex3f(2.5,0,-1);
+    glEnd();
+
+    glBegin(GL_QUADS);
+        glColor3f(0,1,0);
+        glVertex3f(-2.5,0,-1);
+        glVertex3f(0,-3,-1);
+        glVertex3f(0,-3,-0.1);
+        glVertex3f(-2.5,0,-0.1);
+    glEnd();
+
+    glBegin(GL_QUADS);
+        glColor3f(0,1,0);
+        glVertex3f(2.5,0,-1);
+        glVertex3f(0,-3,-1);
+        glVertex3f(0,-3,-0.1);
+        glVertex3f(2.5,0,-0.1);
+    glEnd();
 }
