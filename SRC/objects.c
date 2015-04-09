@@ -265,8 +265,6 @@ void mettre_fleche_descente(int x, int y, int z) {
 }
 
 void fleche_montee() {
-    glLineWidth(1.1);
-
     glBegin(GL_QUADS);
         glColor3f(0,1,0);
         glVertex3f(-1.5,-3,-1);
