@@ -20,5 +20,6 @@ void mettre_fleche_montee(int x, int y, int z);
 void mettre_fleche_descente(int x, int y, int z);
 void fleche_montee();
 void fleche_descente();
+void helico();
 
 #endif /* _OBJECTS_ */

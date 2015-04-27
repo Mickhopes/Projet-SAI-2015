@@ -90,6 +90,7 @@ void affichage() {
 	    glVertex3f(-(TAILLE_CUBE*maze.length),-0.1,(TAILLE_CUBE*maze.width)+(TAILLE_CUBE*maze.width));
 	glEnd();
 
+    helico();
     labyrinthe(&maze);
 
 	glutSwapBuffers();

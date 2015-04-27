@@ -395,3 +395,41 @@ void fleche_descente() {
         glVertex3f(2.5,0,-0.1);
     glEnd();
 }
+
+
+
+void helico(){
+
+    /* Coordonnées de base du centre du corps de l'hélico */
+    int xH = (maze.width*TAILLE_CUBE)/2;
+    int yH = (maze.height*TAILLE_CUBE)+17;
+    int zH = (maze.length*TAILLE_CUBE)/2;
+
+    /* Fuselage de l'hélico <=> ellipsoïde de centre xH, yH, zH */
+    glPushMatrix();
+    glTranslatef(xH,yH,zH);
+    glScalef(2.0,3.0,6.0);
+    glColor3f(0,0,1);
+    gluSphere(gluNewQuadric(), 5.0, 20, 20);
+    glPopMatrix();
+
+
+    glPushMatrix();
+    glTranslatef();
+    /* Train d'atterrissage */
+
+    /* Mat */
+
+    /* Pales de rotor*/
+
+    /* Queue */
+
+    /* Rotor de Queue */
+
+
+    glPopMatrix();
+
+
+
+
+}
