@@ -17,7 +17,7 @@ int pointeur;
 
 void raffraichissement() {
     if(tab_key[DESSUS] != -1){
-        if(obs.y < tab_key[DESSUS]*TAILLE_CUBE +TAILLE_CUBE/4){
+        if(obs.y < tab_key[DESSUS]*TAILLE_CUBE + TAILLE_CUBE/4){
             obs.y += 1;
         }
         else{
@@ -27,7 +27,7 @@ void raffraichissement() {
 
     }
     if(tab_key[DESSOUS] != -1){
-        if(obs.y > tab_key[DESSOUS]*TAILLE_CUBE +TAILLE_CUBE/4){
+        if(obs.y > tab_key[DESSOUS]*TAILLE_CUBE + TAILLE_CUBE/4){
             obs.y -= 1;
         }
         else{
@@ -187,7 +187,7 @@ void deplacerCamera(int dir) {
         }
     } else if (dir == DESSUS) {
         if (obs.z > 0 && obs.z < maze.width*TAILLE_CUBE && obs.x > 0 && obs.x < maze.width*TAILLE_CUBE && obs.y > 0 && obs.y < maze.height*TAILLE_CUBE) {
-            if (z < maze.height-1 && maze.cases[x][y][z].MUR_HAUT == 0) {
+            if (z <= maze.height-1 && maze.cases[x][y][z].MUR_HAUT == 0) {
                 /* Evite une collision avec le mur du dessus */
                 if (obs.z+5 < x*TAILLE_CUBE+TAILLE_CUBE && obs.z-5 > x*TAILLE_CUBE) {
                    tab_key[DESSUS] = z+1;
