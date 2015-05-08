@@ -21,7 +21,7 @@
         for(x = 0; x < maze->length; x++) {
             if (maze->cases[z][x][0].MUR_BAS == 1) {
                 glBegin(GL_QUADS);
-                    glColor3f(0.4,0.4,0.4);
+                    glColor3f(0.6,0.6,0.6);
                     glVertex3f(x*TAILLE_CUBE,0,z*TAILLE_CUBE);
                     glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,0,z*TAILLE_CUBE);
                     glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,0,z*TAILLE_CUBE+TAILLE_CUBE);
@@ -130,7 +130,7 @@
                  */
                 if (a.x != z || a.y != x || a.z != y) {
                     glBegin(GL_QUADS);
-                        glColor3f(0.4,0.4,0.4);
+                        glColor3f(0.6,0.6,0.6);
                         glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
                         glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
                         glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
@@ -147,7 +147,7 @@
                 } else {
                     if (a.en_mouvement == 0) {
                         glBegin(GL_QUADS);
-                            glColor3f(0.4,0.4,0.4);
+                            glColor3f(0.6,0.6,0.6);
                             glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
                             glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
                             glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
