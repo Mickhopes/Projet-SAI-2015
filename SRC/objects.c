@@ -415,7 +415,6 @@ void helico(){
 
 
     glPushMatrix();
-    glTranslatef();
     /* Train d'atterrissage */
 
     /* Mat */
@@ -432,4 +431,40 @@ void helico(){
 
 
 
+}
+
+void hud(){
+        // HUD - Always Last Thing!
+
+    glMatrixMode(GL_PROJECTION);
+    glPushMatrix();
+    glLoadIdentity();
+    glOrtho(0, WIDTH, 0,HEIGHT, -1, 1);
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+    glLoadIdentity();
+
+
+    /* TIMER */
+    int i;
+    int min = timer / 60;
+    int sec = timer % 60;
+    char time[5];
+
+    sprintf(time, "%d:%d", min, sec);
+
+    glLineWidth(2.0);
+    glColor3f(1.0, 0.0, 0.0);
+    glTranslated(10, HEIGHT-37, 0);
+    glScalef(0.3, 0.3, 0.0);
+    for(i = 0; i < 5; i++) {
+        glutStrokeCharacter(GLUT_STROKE_ROMAN, time[i]);
+    }
+    glLineWidth(1.0);
+
+    glLoadIdentity();
+    glMatrixMode(GL_PROJECTION);
+    glPopMatrix();
+    glMatrixMode(GL_MODELVIEW);
+    glPopMatrix();
 }

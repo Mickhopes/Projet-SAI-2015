@@ -13,7 +13,10 @@
 #include "maze.h"
 #include "objects.h"
 
+int timer;
+
 void affichage();
+void dec_timer(int value);
 
 int main(int argc, char* argv[]) {
 	if (!init_maze(&maze, TAILLE_LABY, TAILLE_LABY, TAILLE_LABY))
@@ -29,6 +32,8 @@ int main(int argc, char* argv[]) {
 	vis.x = 0;
 	vis.y = 0;
 	vis.z = 1;
+
+	timer = 300;
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
@@ -50,6 +55,8 @@ int main(int argc, char* argv[]) {
     glutPassiveMotionFunc(vMotion);
 	glutDisplayFunc(affichage);
 
+	glutTimerFunc(1000, dec_timer, 0);
+
 	glutMainLoop();
 
 	return 0;
@@ -58,8 +65,14 @@ int main(int argc, char* argv[]) {
 void affichage() {
     camera();
 
-    if (obs.z > (maze.width-1)*TAILLE_CUBE && obs.x > (maze.length-1)*TAILLE_CUBE && obs.y > (maze.height-1)*TAILLE_CUBE) {
+    if (0 == 1) {
         printf("\nTu as réussi ! Bravo !\n");
+        free_maze(&maze);
+        exit(EXIT_SUCCESS);
+    }
+
+    if (timer <= 0) {
+        printf("\nTu as mis trop de temps !\n");
         free_maze(&maze);
         exit(EXIT_SUCCESS);
     }
@@ -92,6 +105,14 @@ void affichage() {
 
     helico();
     labyrinthe(&maze);
+    hud();
 
 	glutSwapBuffers();
+}
+
+void dec_timer(int value) {
+    if (timer > 0) {
+        timer--;
+        glutTimerFunc(1000, dec_timer, 0);
+    }
 }

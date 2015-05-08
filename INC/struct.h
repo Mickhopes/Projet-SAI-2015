@@ -42,12 +42,12 @@ typedef struct Point {
 	float z;
 }Point;
 
-typedef struct Ascenceur {
+typedef struct Ascenseur {
 	int x;
 	int y;
 	int z;
 	int en_mouvement;
-}Ascenceur;
+}Ascenseur;
 
 typedef struct Cell {
 	int x, y, z;
@@ -84,6 +84,8 @@ int stairs[TAILLE_LABY];
 
 int tab_key[6];
 
-Ascenceur a;
+extern int timer;
+
+Ascenseur a;
 
 #endif /* _STRUCT_ */
