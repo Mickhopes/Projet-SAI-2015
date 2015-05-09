@@ -14,7 +14,7 @@
  void labyrinthe(Maze *maze) {
     int x, y, z;
 
-    glLineWidth(2.0);
+    glBindTexture(GL_TEXTURE_2D, texture[2]);
 
     /* Sol */
     for(z = 0; z < maze->width; z++) {
@@ -22,22 +22,16 @@
             if (maze->cases[z][x][0].MUR_BAS == 1) {
                 glBegin(GL_QUADS);
                     glColor3f(0.6,0.6,0.6);
-                    glVertex3f(x*TAILLE_CUBE,0,z*TAILLE_CUBE);
-                    glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,0,z*TAILLE_CUBE);
-                    glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,0,z*TAILLE_CUBE+TAILLE_CUBE);
-                    glVertex3f(x*TAILLE_CUBE,0,z*TAILLE_CUBE+TAILLE_CUBE);
-                glEnd();
-
-                glBegin(GL_LINE_LOOP);
-                    glColor3f(0, 0, 0);
-                    glVertex3f(x*TAILLE_CUBE,0,z*TAILLE_CUBE);
-                    glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,0,z*TAILLE_CUBE);
-                    glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,0,z*TAILLE_CUBE+TAILLE_CUBE);
-                    glVertex3f(x*TAILLE_CUBE,0,z*TAILLE_CUBE+TAILLE_CUBE);
+                    glTexCoord2f(0.0, 0.0); glVertex3f(x*TAILLE_CUBE,0,z*TAILLE_CUBE);
+                    glTexCoord2f(1.0, 0.0); glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,0,z*TAILLE_CUBE);
+                    glTexCoord2f(1.0, 1.0); glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,0,z*TAILLE_CUBE+TAILLE_CUBE);
+                    glTexCoord2f(0.0, 1.0); glVertex3f(x*TAILLE_CUBE,0,z*TAILLE_CUBE+TAILLE_CUBE);
                 glEnd();
             }
         }
     }
+
+    glBindTexture(GL_TEXTURE_2D, texture[1]);
 
     /* Face gauche du batiment */
     for(x = 0; x < maze->length; x++) {
@@ -45,22 +39,16 @@
             if (maze->cases[0][x][y].MUR_GAUCHE == 1) {
                 glBegin(GL_QUADS);
                     glColor3f(0.4,0.4,0.4);
-                    glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE,0);
-                    glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE,0);
-                    glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,0);
-                    glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,0);
-                glEnd();
-
-                glBegin(GL_LINE_LOOP);
-                    glColor3f(0, 0, 0);
-                    glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE,0);
-                    glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE,0.);
-                    glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,0);
-                    glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,0);
+                    glTexCoord2f(0.0, 0.0); glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE,0);
+                    glTexCoord2f(1.0, 0.0); glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE,0);
+                    glTexCoord2f(1.0, 1.0); glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,0);
+                    glTexCoord2f(0.0, 1.0); glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,0);
                 glEnd();
             }
         }
     }
+
+    glBindTexture(GL_TEXTURE_2D, texture[1]);
 
     /* Face avant du batiment */
     for(z = 0; z < maze->width; z++) {
@@ -68,18 +56,10 @@
             if (maze->cases[z][0][y].MUR_AVANT == 1) {
                 glBegin(GL_QUADS);
                     glColor3f(0.4,0.4,0.4);
-                    glVertex3f(0,y*TAILLE_CUBE,z*TAILLE_CUBE);
-                    glVertex3f(0,y*TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
-                    glVertex3f(0,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
-                    glVertex3f(0,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
-                glEnd();
-
-                glBegin(GL_LINE_LOOP);
-                    glColor3f(0, 0, 0);
-                    glVertex3f(0,y*TAILLE_CUBE,z*TAILLE_CUBE);
-                    glVertex3f(0,y*TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
-                    glVertex3f(0,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
-                    glVertex3f(0,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
+                    glTexCoord2f(0.0, 0.0); glVertex3f(0,y*TAILLE_CUBE,z*TAILLE_CUBE);
+                    glTexCoord2f(1.0, 0.0); glVertex3f(0,y*TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
+                    glTexCoord2f(1.0, 1.0); glVertex3f(0,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
+                    glTexCoord2f(0.0, 1.0); glVertex3f(0,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
                 glEnd();
             }
         }
@@ -88,78 +68,48 @@
     for(z = 0; z < maze->width; z++){
         for(x = 0; x < maze->length; x++){
             for(y = 0; y < maze->height; y++){
-                glLineWidth(2.0);
                 /* On dessine le mur arrière */
                 if (maze->cases[z][x][y].MUR_ARRIERE == 1) {
+                    glBindTexture(GL_TEXTURE_2D, texture[1]);
                     glBegin(GL_QUADS);
                         glColor3f(0.4,0.4,0.4);
-                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE,z*TAILLE_CUBE);
-                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
-                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
-                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
-                    glEnd();
-
-                    glBegin(GL_LINE_LOOP);
-                        glColor3f(0, 0, 0);
-                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE,z*TAILLE_CUBE);
-                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
-                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
-                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
+                        glTexCoord2f(0.0, 0.0); glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE,z*TAILLE_CUBE);
+                        glTexCoord2f(0.0, 1.0); glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
+                        glTexCoord2f(1.0, 1.0); glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
+                        glTexCoord2f(1.0, 0.0); glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
                     glEnd();
                 }
                 /* On dessine de mur de droite */
                 if (maze->cases[z][x][y].MUR_DROITE == 1) {
+                    glBindTexture(GL_TEXTURE_2D, texture[1]);
                     glBegin(GL_QUADS);
                         glColor3f(0.4,0.4,0.4);
-                        glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
-                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
-                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
-                        glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
-                    glEnd();
-
-                    glBegin(GL_LINE_LOOP);
-                        glColor3f(0, 0, 0);
-                        glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
-                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
-                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
-                        glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
+                        glTexCoord2f(0.0, 0.0); glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
+                        glTexCoord2f(1.0, 0.0); glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
+                        glTexCoord2f(1.0, 1.0); glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
+                        glTexCoord2f(0.0, 1.0); glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
                     glEnd();
                 }
                 /* On dessine le mur du dessus tout le temps sauf si l'utilisateur de déplace
                  * entre deux niveaux
                  */
+                glBindTexture(GL_TEXTURE_2D, texture[2]);
                 if (a.x != z || a.y != x || a.z != y) {
                     glBegin(GL_QUADS);
                         glColor3f(0.6,0.6,0.6);
-                        glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
-                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
-                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
-                        glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
-                    glEnd();
-
-                    glBegin(GL_LINE_LOOP);
-                        glColor3f(0, 0, 0);
-                        glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
-                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
-                        glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
-                        glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
+                        glTexCoord2f(0.0, 0.0); glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
+                        glTexCoord2f(1.0, 0.0); glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
+                        glTexCoord2f(1.0, 1.0); glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
+                        glTexCoord2f(0.0, 1.0); glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
                     glEnd();
                 } else {
                     if (a.en_mouvement == 0) {
                         glBegin(GL_QUADS);
                             glColor3f(0.6,0.6,0.6);
-                            glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
-                            glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
-                            glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
-                            glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
-                        glEnd();
-
-                        glBegin(GL_LINE_LOOP);
-                            glColor3f(0, 0, 0);
-                            glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
-                            glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
-                            glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
-                            glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
+                            glTexCoord2f(0.0, 0.0); glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
+                            glTexCoord2f(1.0, 0.0); glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
+                            glTexCoord2f(1.0, 1.0); glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
+                            glTexCoord2f(0.0, 1.0); glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
                         glEnd();
                     }
                 }
@@ -174,8 +124,6 @@
             }
         }
     }
-
-    glLineWidth(1.0);
  }
 
 void mettre_fleche_montee(int z, int x, int y) {
@@ -573,7 +521,7 @@ void hud(){
 
     sprintf(time, "%d%d:%d%d", dix_min,unite_min,dix_sec,unite_sec);
 
-    glLineWidth(2.0);
+    glLineWidth(5.0);
     glColor3f(1.0, 0.0, 0.0);
     glTranslated(10, HEIGHT-37, 0);
     glScalef(0.3, 0.3, 0.0);

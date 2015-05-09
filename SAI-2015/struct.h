@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+#include "SOIL.h"
 
 #define WIDTH 800
 #define HEIGHT 600
@@ -75,6 +76,8 @@ typedef struct Maze {
 	int width, length, height;
 	Cell*** cases;
 }Maze;
+
+GLuint texture[3];
 
 Point obs, vis, souris;
 

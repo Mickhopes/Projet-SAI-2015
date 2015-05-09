@@ -17,7 +17,7 @@ int pointeur;
 
 void raffraichissement() {
     if(tab_key[DESSUS] != -1){
-        if(obs.y < tab_key[DESSUS]*TAILLE_CUBE + TAILLE_CUBE/4){
+        if(obs.y < tab_key[DESSUS]*TAILLE_CUBE + TAILLE_CUBE/2){
             obs.y += 1;
         }
         else{
@@ -27,7 +27,7 @@ void raffraichissement() {
 
     }
     if(tab_key[DESSOUS] != -1){
-        if(obs.y > tab_key[DESSOUS]*TAILLE_CUBE + TAILLE_CUBE/4){
+        if(obs.y > tab_key[DESSOUS]*TAILLE_CUBE + TAILLE_CUBE/2){
             obs.y -= 1;
         }
         else{

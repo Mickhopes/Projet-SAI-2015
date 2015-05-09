@@ -17,17 +17,20 @@ int timer;
 
 void affichage();
 void dec_timer(int value);
+int load_gl_textures();
 
 int main(int argc, char* argv[]) {
-	if (!init_maze(&maze, TAILLE_LABY, TAILLE_LABY, TAILLE_LABY))
-		return EXIT_FAILURE;
+	if (!init_maze(&maze, TAILLE_LABY, TAILLE_LABY, TAILLE_LABY)) {
+            printf("Erreur lors du chargement du labyrinthe !\n");
+        return EXIT_FAILURE;
+	}
 
 	generate_maze(&maze);
 
 	show_maze(&maze);
 
 	obs.x = TAILLE_CUBE/2;
-	obs.y = TAILLE_CUBE/4;
+	obs.y = TAILLE_CUBE/2;
 	obs.z = TAILLE_CUBE/2;
 	vis.x = 0;
 	vis.y = 0;
@@ -55,11 +58,62 @@ int main(int argc, char* argv[]) {
     glutPassiveMotionFunc(vMotion);
 	glutDisplayFunc(affichage);
 
+	if (!load_gl_textures())
+    {
+        printf("Erreur lors du chargement des textures !\n");
+        printf("%s\n", SOIL_last_result());
+        return EXIT_FAILURE;
+    }
+
+    glEnable(GL_TEXTURE_2D);
+    glShadeModel(GL_SMOOTH);
+    glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
+    glClearDepth(1.0f);
+    glDepthFunc(GL_LEQUAL);
+    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+
 	glutTimerFunc(1000, dec_timer, 0);
 
 	glutMainLoop();
 
 	return 0;
+}
+
+int load_gl_textures() {
+    /* load an image file directly as a new OpenGL texture */
+    texture[0] = SOIL_load_OGL_texture
+        (
+        "grass.jpg",
+        SOIL_LOAD_AUTO,
+        SOIL_CREATE_NEW_ID,
+        SOIL_FLAG_INVERT_Y
+        );
+
+    texture[1] = SOIL_load_OGL_texture
+        (
+        "wall.jpg",
+        SOIL_LOAD_AUTO,
+        SOIL_CREATE_NEW_ID,
+        SOIL_FLAG_INVERT_Y
+        );
+
+    texture[2] = SOIL_load_OGL_texture
+        (
+        "floor.jpg",
+        SOIL_LOAD_AUTO,
+        SOIL_CREATE_NEW_ID,
+        SOIL_FLAG_INVERT_Y
+        );
+
+    if(texture[0] == 0 || texture[1] == 0 || texture[2] == 0)
+        return 0;
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+
+    return 1;
 }
 
 void affichage() {
@@ -86,13 +140,15 @@ void affichage() {
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	glBindTexture(GL_TEXTURE_2D, texture[0]);
+
 	/* Sol */
 	glBegin(GL_QUADS);
 	    glColor3f(0,0.4,0);
-	    glVertex3f(-(TAILLE_CUBE*maze.length),-0.1,-(TAILLE_CUBE*maze.width));
-	    glVertex3f((TAILLE_CUBE*maze.length)+(TAILLE_CUBE*maze.length),-0.1,-(TAILLE_CUBE*maze.width));
-	    glVertex3f((TAILLE_CUBE*maze.length)+(TAILLE_CUBE*maze.length),-0.1,(TAILLE_CUBE*maze.width)+(TAILLE_CUBE*maze.width));
-	    glVertex3f(-(TAILLE_CUBE*maze.length),-0.1,(TAILLE_CUBE*maze.width)+(TAILLE_CUBE*maze.width));
+	    glTexCoord2f(0.0, 0.0); glVertex3f(-(TAILLE_CUBE*maze.length),-0.1,-(TAILLE_CUBE*maze.width));
+	    glTexCoord2f(1.0, 0.0); glVertex3f((TAILLE_CUBE*maze.length)+(TAILLE_CUBE*maze.length),-0.1,-(TAILLE_CUBE*maze.width));
+	    glTexCoord2f(1.0, 1.0); glVertex3f((TAILLE_CUBE*maze.length)+(TAILLE_CUBE*maze.length),-0.1,(TAILLE_CUBE*maze.width)+(TAILLE_CUBE*maze.width));
+	    glTexCoord2f(0.0, 1.0); glVertex3f(-(TAILLE_CUBE*maze.length),-0.1,(TAILLE_CUBE*maze.width)+(TAILLE_CUBE*maze.width));
 	glEnd();
 
 	glBegin(GL_LINE_LOOP);
