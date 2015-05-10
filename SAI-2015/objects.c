@@ -11,9 +11,27 @@
 
  #include "objects.h"
 
+ void sol() {
+    glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, texture[0]);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+
+	glBegin(GL_QUADS);
+	    glColor3f(0,0.4,0);
+	    glTexCoord2f(0.0, 0.0); glVertex3f(-(TAILLE_CUBE*maze.length),-0.1,-(TAILLE_CUBE*maze.width));
+	    glTexCoord2f(100.0, 0.0); glVertex3f((TAILLE_CUBE*maze.length)+(TAILLE_CUBE*maze.length),-0.1,-(TAILLE_CUBE*maze.width));
+	    glTexCoord2f(100.0, 100.0); glVertex3f((TAILLE_CUBE*maze.length)+(TAILLE_CUBE*maze.length),-0.1,(TAILLE_CUBE*maze.width)+(TAILLE_CUBE*maze.width));
+	    glTexCoord2f(0.0, 100.0); glVertex3f(-(TAILLE_CUBE*maze.length),-0.1,(TAILLE_CUBE*maze.width)+(TAILLE_CUBE*maze.width));
+	glEnd();
+ }
+
  void labyrinthe(Maze *maze) {
     int x, y, z;
 
+    glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, texture[2]);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
@@ -74,6 +92,7 @@
     for(z = 0; z < maze->width; z++){
         for(x = 0; x < maze->length; x++){
             for(y = 0; y < maze->height; y++){
+                glEnable(GL_TEXTURE_2D);
                 /* On dessine le mur arrière */
                 if (maze->cases[z][x][y].MUR_ARRIERE == 1) {
                     glBindTexture(GL_TEXTURE_2D, texture[1]);
@@ -130,10 +149,12 @@
                 }
                 /* On dessine l'indicateur de montée */
                 if (maze->cases[z][x][y].MUR_HAUT == 0) {
+                    glDisable(GL_TEXTURE_2D);
                     mettre_fleche_montee(z, x, y);
                 }
                 /* On dessine l'indicateur de descente */
                 if (maze->cases[z][x][y].MUR_BAS == 0) {
+                    glDisable(GL_TEXTURE_2D);
                     mettre_fleche_descente(x, y, z);
                 }
             }
@@ -362,6 +383,7 @@ void fleche_descente() {
 
 
 void helico(){
+    glDisable(GL_TEXTURE_2D);
 
     /* Coordonnées de base du centre du corps de l'hélico */
     int xH = (maze.width*TAILLE_CUBE)/2;
@@ -532,7 +554,7 @@ void hud(){
 
     sprintf(time, "%02d:%02d", min,sec);
 
-    glLineWidth(5.0);
+    glLineWidth(3.0);
     glColor3f(1.0, 0.0, 0.0);
     glTranslated(10, HEIGHT-37, 0);
     glScalef(0.3, 0.3, 0.0);

@@ -15,6 +15,7 @@
 #include "struct.h"
 #include "maze.h"
 
+void sol();
 void labyrinthe(Maze *maze);
 void mettre_fleche_montee(int x, int y, int z);
 void mettre_fleche_descente(int x, int y, int z);

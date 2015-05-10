@@ -197,6 +197,8 @@ void deplacerCamera(int dir) {
                    a.en_mouvement = 1;
                 }
             }
+        } else {
+            obs.y += 3;
         }
     } else if (dir == DESSOUS) {
         if (obs.z > 0 && obs.z < maze.width*TAILLE_CUBE && obs.x > 0 && obs.x < maze.width*TAILLE_CUBE && obs.y > 0 && obs.y < maze.height*TAILLE_CUBE) {
