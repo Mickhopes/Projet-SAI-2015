@@ -512,14 +512,10 @@ void hud(){
     int i;
     int min = timer / 60;
     int sec = timer % 60;
-    int dix_min = min / 10;
-    int unite_min = min % 10;
-    int dix_sec = sec / 10;
-    int unite_sec = sec % 10;
 
     char time[6];
 
-    sprintf(time, "%d%d:%d%d", dix_min,unite_min,dix_sec,unite_sec);
+    sprintf(time, "%02d:%02d", min,sec);
 
     glLineWidth(5.0);
     glColor3f(1.0, 0.0, 0.0);

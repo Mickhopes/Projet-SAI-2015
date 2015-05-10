@@ -17,6 +17,7 @@ int timer;
 
 void affichage();
 void dec_timer(int value);
+void init_variables();
 int load_gl_textures();
 
 int main(int argc, char* argv[]) {
@@ -29,14 +30,7 @@ int main(int argc, char* argv[]) {
 
 	show_maze(&maze);
 
-	obs.x = TAILLE_CUBE/2;
-	obs.y = TAILLE_CUBE/2;
-	obs.z = TAILLE_CUBE/2;
-	vis.x = 0;
-	vis.y = 0;
-	vis.z = 1;
-
-	timer = 300;
+	init_variables();
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
@@ -77,6 +71,20 @@ int main(int argc, char* argv[]) {
 	glutMainLoop();
 
 	return 0;
+}
+
+void init_variables() {
+    obs.x = TAILLE_CUBE/2;
+	obs.y = TAILLE_CUBE/2;
+	obs.z = TAILLE_CUBE/2;
+	vis.x = 0;
+	vis.y = 0;
+	vis.z = 1;
+
+	tab_key[DESSUS] = -1;
+	tab_key[DESSOUS] = -1;
+
+	timer = 300;
 }
 
 int load_gl_textures() {
