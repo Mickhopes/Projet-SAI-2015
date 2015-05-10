@@ -76,10 +76,10 @@ int main(int argc, char* argv[]) {
 void init_variables() {
     obs.x = TAILLE_CUBE/2;
 	obs.y = TAILLE_CUBE/2;
-	obs.z = TAILLE_CUBE/2;
+	obs.z = -TAILLE_CUBE-(TAILLE_CUBE/2);
 	vis.x = 0;
 	vis.y = 0;
-	vis.z = 1;
+	vis.z = 0;
 
 	tab_key[DESSUS] = -1;
 	tab_key[DESSOUS] = -1;
