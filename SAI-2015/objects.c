@@ -168,7 +168,7 @@ void mettre_fleche_montee(int z, int x, int y) {
 
     /* On dessinera si possible les indicateurs sur ce mur */
     if (maze.cases[z][x][y].MUR_DROITE == 1) {
-        tx = x*TAILLE_CUBE+TAILLE_CUBE/2;
+        tx = x*TAILLE_CUBE+TAILLE_CUBE/2-TAILLE_CUBE/4;
         ty = y*TAILLE_CUBE+TAILLE_CUBE/2;
         tz = z*TAILLE_CUBE+TAILLE_CUBE;
     } else {
@@ -176,12 +176,12 @@ void mettre_fleche_montee(int z, int x, int y) {
         if (maze.cases[x][y][z].MUR_AVANT == 1) {
             tx = x*TAILLE_CUBE;
             ty = y*TAILLE_CUBE+TAILLE_CUBE/2;
-            tz = z*TAILLE_CUBE+TAILLE_CUBE/2;
+            tz = z*TAILLE_CUBE+TAILLE_CUBE/2-TAILLE_CUBE/4;
             rotate = -90.0;
         } else {
             /* etc... */
             if (maze.cases[x][y][z].MUR_GAUCHE == 1) {
-                tx = x*TAILLE_CUBE+TAILLE_CUBE/2;
+                tx = x*TAILLE_CUBE+TAILLE_CUBE/2+TAILLE_CUBE/4;
                 ty = y*TAILLE_CUBE+TAILLE_CUBE/2;
                 tz = z*TAILLE_CUBE;
                 rotate = 180.0;
@@ -189,7 +189,7 @@ void mettre_fleche_montee(int z, int x, int y) {
                 if (maze.cases[x][y][z].MUR_ARRIERE == 1) {
                     tx = x*TAILLE_CUBE+TAILLE_CUBE;
                     ty = y*TAILLE_CUBE+TAILLE_CUBE/2;
-                    tz = z*TAILLE_CUBE+TAILLE_CUBE/2;
+                    tz = z*TAILLE_CUBE+TAILLE_CUBE/2+TAILLE_CUBE/4;
                     rotate = 90.0;
                 }
             }
@@ -211,7 +211,7 @@ void mettre_fleche_descente(int x, int y, int z) {
 
     /* On dessinera si possible les indicateurs sur ce mur */
     if (maze.cases[z][x][y].MUR_DROITE == 1) {
-        tx = x*TAILLE_CUBE+TAILLE_CUBE/2;
+        tx = x*TAILLE_CUBE+TAILLE_CUBE/2+TAILLE_CUBE/4;
         ty = y*TAILLE_CUBE+TAILLE_CUBE/2;
         tz = z*TAILLE_CUBE+TAILLE_CUBE;
     } else {
@@ -219,12 +219,12 @@ void mettre_fleche_descente(int x, int y, int z) {
         if (maze.cases[x][y][z].MUR_AVANT == 1) {
             tx = x*TAILLE_CUBE;
             ty = y*TAILLE_CUBE+TAILLE_CUBE/2;
-            tz = z*TAILLE_CUBE+TAILLE_CUBE/2;
+            tz = z*TAILLE_CUBE+TAILLE_CUBE/2+TAILLE_CUBE/4;
             rotate = -90.0;
         } else {
             /* etc... */
             if (maze.cases[x][y][z].MUR_GAUCHE == 1) {
-                tx = x*TAILLE_CUBE+TAILLE_CUBE/2;
+                tx = x*TAILLE_CUBE+TAILLE_CUBE/2-TAILLE_CUBE/4;
                 ty = y*TAILLE_CUBE+TAILLE_CUBE/2;
                 tz = z*TAILLE_CUBE;
                 rotate = 180.0;
@@ -232,7 +232,7 @@ void mettre_fleche_descente(int x, int y, int z) {
                 if (maze.cases[x][y][z].MUR_ARRIERE == 1) {
                     tx = x*TAILLE_CUBE+TAILLE_CUBE;
                     ty = y*TAILLE_CUBE+TAILLE_CUBE/2;
-                    tz = z*TAILLE_CUBE+TAILLE_CUBE/2;
+                    tz = z*TAILLE_CUBE+TAILLE_CUBE/2-TAILLE_CUBE/4;
                     rotate = 90.0;
                 }
             }
