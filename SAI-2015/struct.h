@@ -23,7 +23,7 @@
 #define WIDTH 800
 #define HEIGHT 600
 
-#define TAILLE_LABY 5
+#define TAILLE_LABY 10
 
 #define HAUT 0
 #define BAS 1
@@ -32,8 +32,7 @@
 #define DESSUS 4
 #define DESSOUS 5
 
-#define STAIRS_MAX 3
-#define CASES_MIN 10
+#define CASES_MIN 25
 
 #define TAILLE_CUBE 30
 

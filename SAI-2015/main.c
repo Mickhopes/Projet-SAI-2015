@@ -83,7 +83,7 @@ int load_gl_textures() {
     /* load an image file directly as a new OpenGL texture */
     texture[0] = SOIL_load_OGL_texture
         (
-        "grass.jpg",
+        "grass.png",
         SOIL_LOAD_AUTO,
         SOIL_CREATE_NEW_ID,
         SOIL_FLAG_INVERT_Y
@@ -146,17 +146,9 @@ void affichage() {
 	glBegin(GL_QUADS);
 	    glColor3f(0,0.4,0);
 	    glTexCoord2f(0.0, 0.0); glVertex3f(-(TAILLE_CUBE*maze.length),-0.1,-(TAILLE_CUBE*maze.width));
-	    glTexCoord2f(1.0, 0.0); glVertex3f((TAILLE_CUBE*maze.length)+(TAILLE_CUBE*maze.length),-0.1,-(TAILLE_CUBE*maze.width));
-	    glTexCoord2f(1.0, 1.0); glVertex3f((TAILLE_CUBE*maze.length)+(TAILLE_CUBE*maze.length),-0.1,(TAILLE_CUBE*maze.width)+(TAILLE_CUBE*maze.width));
-	    glTexCoord2f(0.0, 1.0); glVertex3f(-(TAILLE_CUBE*maze.length),-0.1,(TAILLE_CUBE*maze.width)+(TAILLE_CUBE*maze.width));
-	glEnd();
-
-	glBegin(GL_LINE_LOOP);
-	    glColor3f(0, 0, 0);
-	    glVertex3f(-(TAILLE_CUBE*maze.length),-0.1,-(TAILLE_CUBE*maze.width));
-	    glVertex3f((TAILLE_CUBE*maze.length)+(TAILLE_CUBE*maze.length),-0.1,-(TAILLE_CUBE*maze.width));
-	    glVertex3f((TAILLE_CUBE*maze.length)+(TAILLE_CUBE*maze.length),-0.1,(TAILLE_CUBE*maze.width)+(TAILLE_CUBE*maze.width));
-	    glVertex3f(-(TAILLE_CUBE*maze.length),-0.1,(TAILLE_CUBE*maze.width)+(TAILLE_CUBE*maze.width));
+	    glTexCoord2f(100.0, 0.0); glVertex3f((TAILLE_CUBE*maze.length)+(TAILLE_CUBE*maze.length),-0.1,-(TAILLE_CUBE*maze.width));
+	    glTexCoord2f(100.0, 100.0); glVertex3f((TAILLE_CUBE*maze.length)+(TAILLE_CUBE*maze.length),-0.1,(TAILLE_CUBE*maze.width)+(TAILLE_CUBE*maze.width));
+	    glTexCoord2f(0.0, 100.0); glVertex3f(-(TAILLE_CUBE*maze.length),-0.1,(TAILLE_CUBE*maze.width)+(TAILLE_CUBE*maze.width));
 	glEnd();
 
     helico();
