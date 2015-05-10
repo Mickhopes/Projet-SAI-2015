@@ -23,7 +23,9 @@
 #define WIDTH 800
 #define HEIGHT 600
 
-#define TAILLE_LABY 10
+#define TAILLE_LABY_X 10
+#define TAILLE_LABY_Y 10
+#define TAILLE_LABY_Z 10
 
 #define HAUT 0
 #define BAS 1
@@ -76,13 +78,12 @@ typedef struct Maze {
 	Cell*** cases;
 }Maze;
 
-GLuint texture[3];
+GLuint texture[4];
 
 Point obs, vis, souris, helico_pos;
 
 extern int level;
-int count[TAILLE_LABY];
-int stairs[TAILLE_LABY];
+int count[TAILLE_LABY_Z];
 
 int tab_key[6];
 

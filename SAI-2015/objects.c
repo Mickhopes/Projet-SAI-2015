@@ -26,6 +26,45 @@
 	    glTexCoord2f(100.0, 100.0); glVertex3f((TAILLE_CUBE*maze.length)+(TAILLE_CUBE*maze.length),-0.1,(TAILLE_CUBE*maze.width)+(TAILLE_CUBE*maze.width));
 	    glTexCoord2f(0.0, 100.0); glVertex3f(-(TAILLE_CUBE*maze.length),-0.1,(TAILLE_CUBE*maze.width)+(TAILLE_CUBE*maze.width));
 	glEnd();
+
+
+    /* On fait les grilles */
+	glBindTexture(GL_TEXTURE_2D, texture[3]);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+
+    glBegin(GL_QUADS);
+	    glColor3f(1.0,1.0,1.0);
+	    glTexCoord2f(0.0, 0.0); glVertex3f(-(TAILLE_CUBE*maze.length),-0.1,-(TAILLE_CUBE*maze.width));
+	    glTexCoord2f(100.0, 0.0); glVertex3f((TAILLE_CUBE*maze.length)+(TAILLE_CUBE*maze.length),-0.1,-(TAILLE_CUBE*maze.width));
+	    glTexCoord2f(100.0, 1.0); glVertex3f((TAILLE_CUBE*maze.length)+(TAILLE_CUBE*maze.length),-0.1+TAILLE_CUBE,-(TAILLE_CUBE*maze.width));
+	    glTexCoord2f(0.0, 1.0); glVertex3f(-(TAILLE_CUBE*maze.length),-0.1+TAILLE_CUBE,-(TAILLE_CUBE*maze.width));
+	glEnd();
+
+	glBegin(GL_QUADS);
+	    glColor3f(1.0,1.0,1.0);
+	    glTexCoord2f(0.0, 0.0); glVertex3f(-(TAILLE_CUBE*maze.length),-0.1,-(TAILLE_CUBE*maze.width));
+	    glTexCoord2f(100.0, 0.0); glVertex3f(-(TAILLE_CUBE*maze.length),-0.1,(TAILLE_CUBE*maze.width)+(TAILLE_CUBE*maze.width));
+	    glTexCoord2f(100.0, 1.0); glVertex3f(-(TAILLE_CUBE*maze.length),-0.1+TAILLE_CUBE,(TAILLE_CUBE*maze.width)+(TAILLE_CUBE*maze.width));
+	    glTexCoord2f(0.0, 1.0); glVertex3f(-(TAILLE_CUBE*maze.length),-0.1+TAILLE_CUBE,-(TAILLE_CUBE*maze.width));
+	glEnd();
+
+	glBegin(GL_QUADS);
+	    glColor3f(1.0,1.0,1.0);
+	    glTexCoord2f(0.0, 0.0); glVertex3f(-(TAILLE_CUBE*maze.length),-0.1,(TAILLE_CUBE*maze.width)+(TAILLE_CUBE*maze.width));
+	    glTexCoord2f(100.0, 0.0); glVertex3f((TAILLE_CUBE*maze.length)+(TAILLE_CUBE*maze.length),-0.1,(TAILLE_CUBE*maze.width)+(TAILLE_CUBE*maze.width));
+	    glTexCoord2f(100.0, 1.0); glVertex3f((TAILLE_CUBE*maze.length)+(TAILLE_CUBE*maze.length),-0.1+TAILLE_CUBE,(TAILLE_CUBE*maze.width)+(TAILLE_CUBE*maze.width));
+	    glTexCoord2f(0.0, 1.0); glVertex3f(-(TAILLE_CUBE*maze.length),-0.1+TAILLE_CUBE,(TAILLE_CUBE*maze.width)+(TAILLE_CUBE*maze.width));
+	glEnd();
+
+	glBegin(GL_QUADS);
+	    glColor3f(1.0,1.0,1.0);
+	    glTexCoord2f(0.0, 0.0); glVertex3f((TAILLE_CUBE*maze.length)+(TAILLE_CUBE*maze.length),-0.1,-(TAILLE_CUBE*maze.width));
+	    glTexCoord2f(100.0, 0.0); glVertex3f((TAILLE_CUBE*maze.length)+(TAILLE_CUBE*maze.length),-0.1,(TAILLE_CUBE*maze.width)+(TAILLE_CUBE*maze.width));
+	    glTexCoord2f(100.0, 1.0); glVertex3f((TAILLE_CUBE*maze.length)+(TAILLE_CUBE*maze.length),-0.1+TAILLE_CUBE,(TAILLE_CUBE*maze.width)+(TAILLE_CUBE*maze.width));
+	    glTexCoord2f(0.0, 1.0); glVertex3f((TAILLE_CUBE*maze.length)+(TAILLE_CUBE*maze.length),-0.1+TAILLE_CUBE,-(TAILLE_CUBE*maze.width));
+	glEnd();
  }
 
  void labyrinthe(Maze *maze) {
@@ -160,6 +199,45 @@
             }
         }
     }
+
+    /* Puis on fait les grilles sur le toit */
+    glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, texture[3]);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+
+    glBegin(GL_QUADS);
+	    glColor3f(1.0,1.0,1.0);
+	    glTexCoord2f(0.0, 0.0); glVertex3f(0,TAILLE_CUBE*maze->height,0);
+	    glTexCoord2f(20.0, 0.0); glVertex3f(0,TAILLE_CUBE*maze->height,TAILLE_CUBE*maze->width);
+	    glTexCoord2f(20.0, 1.0); glVertex3f(0,TAILLE_CUBE*maze->height+TAILLE_CUBE,TAILLE_CUBE*maze->width);
+	    glTexCoord2f(0.0, 1.0); glVertex3f(0,TAILLE_CUBE*maze->height+TAILLE_CUBE,0);
+	glEnd();
+
+	glBegin(GL_QUADS);
+	    glColor3f(1.0,1.0,1.0);
+	    glTexCoord2f(0.0, 0.0); glVertex3f(0,TAILLE_CUBE*maze->height,0);
+	    glTexCoord2f(20.0, 0.0); glVertex3f(TAILLE_CUBE*maze->length,TAILLE_CUBE*maze->height,0);
+	    glTexCoord2f(20.0, 1.0); glVertex3f(TAILLE_CUBE*maze->length,TAILLE_CUBE*maze->height+TAILLE_CUBE,0);
+	    glTexCoord2f(0.0, 1.0); glVertex3f(0,TAILLE_CUBE*maze->height+TAILLE_CUBE,0);
+	glEnd();
+
+	glBegin(GL_QUADS);
+	    glColor3f(1.0,1.0,1.0);
+	    glTexCoord2f(0.0, 0.0); glVertex3f(TAILLE_CUBE*maze->length,TAILLE_CUBE*maze->height,0);
+	    glTexCoord2f(20.0, 0.0); glVertex3f(TAILLE_CUBE*maze->length,TAILLE_CUBE*maze->height,TAILLE_CUBE*maze->width);
+	    glTexCoord2f(20.0, 1.0); glVertex3f(TAILLE_CUBE*maze->length,TAILLE_CUBE*maze->height+TAILLE_CUBE,TAILLE_CUBE*maze->width);
+	    glTexCoord2f(0.0, 1.0); glVertex3f(TAILLE_CUBE*maze->length,TAILLE_CUBE*maze->height+TAILLE_CUBE,0);
+	glEnd();
+
+	glBegin(GL_QUADS);
+	    glColor3f(1.0,1.0,1.0);
+	    glTexCoord2f(0.0, 0.0); glVertex3f(0,TAILLE_CUBE*maze->height,TAILLE_CUBE*maze->width);
+	    glTexCoord2f(20.0, 0.0); glVertex3f(TAILLE_CUBE*maze->length,TAILLE_CUBE*maze->height,TAILLE_CUBE*maze->width);
+	    glTexCoord2f(20.0, 1.0); glVertex3f(TAILLE_CUBE*maze->length,TAILLE_CUBE*maze->height+TAILLE_CUBE,TAILLE_CUBE*maze->width);
+	    glTexCoord2f(0.0, 1.0); glVertex3f(0,TAILLE_CUBE*maze->height+TAILLE_CUBE,TAILLE_CUBE*maze->width);
+	glEnd();
  }
 
 void mettre_fleche_montee(int x, int y, int z) {

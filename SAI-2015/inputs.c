@@ -231,6 +231,8 @@ void deplacerCamera(int dir) {
                    a.en_mouvement = 1;
                 }
             }
+        } else {
+            obs.y -= 3;
         }
     }
 }

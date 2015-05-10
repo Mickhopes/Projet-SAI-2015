@@ -205,7 +205,7 @@ void generate_maze(Maze *maze) {
 	srand(time(NULL));
 
     /* On initialise nos tableaux */
-    for(i = 0;i<TAILLE_LABY;i++){
+    for(i = 0;i<TAILLE_LABY_Z;i++){
         count[i] = 0;
        // stairs[i] = 0;
     }

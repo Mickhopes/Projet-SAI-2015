@@ -22,7 +22,7 @@ void init_variables();
 int load_gl_textures();
 
 int main(int argc, char* argv[]) {
-	if (!init_maze(&maze, TAILLE_LABY, TAILLE_LABY, TAILLE_LABY)) {
+	if (!init_maze(&maze, TAILLE_LABY_X, TAILLE_LABY_Y, TAILLE_LABY_Z)) {
             printf("Erreur lors du chargement du labyrinthe !\n");
         return EXIT_FAILURE;
 	}
@@ -67,6 +67,9 @@ int main(int argc, char* argv[]) {
     glDepthFunc(GL_LEQUAL);
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	glutTimerFunc(1000, dec_timer, 0);
 
 	glutMainLoop();
@@ -82,17 +85,21 @@ void init_variables() {
 	vis.y = 0;
 	vis.z = 0;
 
-	helico_pos.x = (maze.width*TAILLE_CUBE)/2;
+	helico_pos.x = (maze.length*TAILLE_CUBE)/2;
 	helico_pos.y = (maze.height*TAILLE_CUBE)+11;
-	helico_pos.z = (maze.length*TAILLE_CUBE)/2;
+	helico_pos.z = (maze.width*TAILLE_CUBE)/2;
 
 	angle_rotor = 0.0;
 	angle_rotor_queue = 45.0;
 
+    tab_key[HAUT] = 0;
+	tab_key[BAS] = 0;
+	tab_key[GAUCHE] = 0;
+	tab_key[DROITE] = 0;
 	tab_key[DESSUS] = -1;
 	tab_key[DESSOUS] = -1;
 
-	timer = 20;
+	timer = 300;
 }
 
 int load_gl_textures() {
@@ -121,7 +128,15 @@ int load_gl_textures() {
         SOIL_FLAG_INVERT_Y
         );
 
-    if(texture[0] == 0 || texture[1] == 0 || texture[2] == 0)
+    texture[3] = SOIL_load_OGL_texture
+        (
+        "fence.png",
+        SOIL_LOAD_AUTO,
+        SOIL_CREATE_NEW_ID,
+        SOIL_FLAG_INVERT_Y
+        );
+
+    if(texture[0] == 0 || texture[1] == 0 || texture[2] == 0 || texture[3] == 0)
         return 0;
 
     return 1;
@@ -130,8 +145,12 @@ int load_gl_textures() {
 void affichage() {
     camera();
 
-    if (0 == 1) {
-        printf("\nTu as réussi ! Bravo !\n");
+    /* largeur = helico_pos.x +- 10
+     * longueur = helico_pos.z - 18.5 && helico_pos.z + 35
+     * hauteur = helico_pos.y + 7.5 && helico_pos.y - 9
+     * Ici on vérifie que l'utilisateur est arrivé sur l'hélico ou pas */
+    if (obs.x >= helico_pos.x-10 && obs.x <= helico_pos.x+10 && obs.y >= helico_pos.y-9 && obs.y <= helico_pos.y+7.5 && obs.z >= helico_pos.z-18.5 && obs.z <= helico_pos.z+35) {
+        printf("\nTu as reussi ! Bravo !\n");
         free_maze(&maze);
         exit(EXIT_SUCCESS);
     }
