@@ -78,7 +78,7 @@ typedef struct Maze {
 
 GLuint texture[3];
 
-Point obs, vis, souris;
+Point obs, vis, souris, helico_pos;
 
 extern int level;
 int count[TAILLE_LABY];

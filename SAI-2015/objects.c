@@ -382,13 +382,8 @@ void fleche_descente() {
 
 
 
-void helico(){
+void helico(int xH, int yH, int zH){
     glDisable(GL_TEXTURE_2D);
-
-    /* Coordonnées de base du centre du corps de l'hélico */
-    int xH = (maze.width*TAILLE_CUBE)/2;
-    int yH = (maze.height*TAILLE_CUBE)+11;
-    int zH = (maze.length*TAILLE_CUBE)/2;
 
     /* Fuselage de l'hélico <=> ellipsoïde de centre xH, yH, zH */
 
@@ -547,15 +542,26 @@ void hud(){
 
     /* TIMER */
     int i;
-    int min = timer / 60;
-    int sec = timer % 60;
+    int min = 0;
+    int sec = 0;
+
+    if (timer > 0) {
+        min = timer / 60;
+        sec = timer % 60;
+    }
 
     char time[6];
 
     sprintf(time, "%02d:%02d", min,sec);
 
     glLineWidth(3.0);
-    glColor3f(1.0, 0.0, 0.0);
+
+    if (timer > 0) {
+        glColor3f(0.0, 1.0, 0.0);
+    } else {
+        glColor3f(1.0, 0.0, 0.0);
+    }
+
     glTranslated(10, HEIGHT-37, 0);
     glScalef(0.3, 0.3, 0.0);
     for(i = 0; i < 5; i++) {

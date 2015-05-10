@@ -35,6 +35,11 @@ void raffraichissement() {
             a.en_mouvement = 0;
         }
     }
+
+    if (timer <= 0) {
+        helico_pos.y++;
+    }
+
     glutPostRedisplay();
 }
 

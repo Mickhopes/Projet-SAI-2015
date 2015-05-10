@@ -81,10 +81,14 @@ void init_variables() {
 	vis.y = 0;
 	vis.z = 0;
 
+	helico_pos.x = (maze.width*TAILLE_CUBE)/2;
+	helico_pos.y = (maze.height*TAILLE_CUBE)+11;
+	helico_pos.z = (maze.length*TAILLE_CUBE)/2;
+
 	tab_key[DESSUS] = -1;
 	tab_key[DESSOUS] = -1;
 
-	timer = 300;
+	timer = 20;
 }
 
 int load_gl_textures() {
@@ -128,7 +132,7 @@ void affichage() {
         exit(EXIT_SUCCESS);
     }
 
-    if (timer <= 0) {
+    if (timer <= -5) {
         printf("\nTu as mis trop de temps !\n");
         free_maze(&maze);
         exit(EXIT_SUCCESS);
@@ -147,7 +151,7 @@ void affichage() {
 
     labyrinthe(&maze);
 
-    helico();
+    helico(helico_pos.x, helico_pos.y, helico_pos.z);
 
     hud();
 
@@ -155,7 +159,7 @@ void affichage() {
 }
 
 void dec_timer(int value) {
-    if (timer > 0) {
+    if (timer > -5) {
         timer--;
         glutTimerFunc(1000, dec_timer, 0);
     }
