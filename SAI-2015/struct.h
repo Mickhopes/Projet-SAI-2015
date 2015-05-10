@@ -88,6 +88,8 @@ int tab_key[6];
 
 extern int timer;
 
+extern float angle_rotor, angle_rotor_queue;
+
 Ascenseur a;
 
 #endif /* _STRUCT_ */

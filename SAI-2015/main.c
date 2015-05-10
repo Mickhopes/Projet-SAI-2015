@@ -14,6 +14,7 @@
 #include "objects.h"
 
 int timer;
+float angle_rotor, angle_rotor_queue;
 
 void affichage();
 void dec_timer(int value);
@@ -84,6 +85,9 @@ void init_variables() {
 	helico_pos.x = (maze.width*TAILLE_CUBE)/2;
 	helico_pos.y = (maze.height*TAILLE_CUBE)+11;
 	helico_pos.z = (maze.length*TAILLE_CUBE)/2;
+
+	angle_rotor = 0.0;
+	angle_rotor_queue = 45.0;
 
 	tab_key[DESSUS] = -1;
 	tab_key[DESSOUS] = -1;

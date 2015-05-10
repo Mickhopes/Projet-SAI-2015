@@ -36,6 +36,20 @@ void raffraichissement() {
         }
     }
 
+    // On fait tourner les pales de l'hélico
+    if (angle_rotor > 360.0) {
+        angle_rotor = 0.0;
+    } else {
+        angle_rotor += 3.0;
+    }
+
+    if (angle_rotor_queue > 360.0) {
+        angle_rotor_queue = 0.0;
+    } else {
+        angle_rotor_queue += 3.0;
+    }
+
+    // On fait partir l'hélico à la fin
     if (timer <= 0) {
         helico_pos.y++;
     }

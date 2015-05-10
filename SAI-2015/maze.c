@@ -252,7 +252,7 @@ void carve_maze(Maze *maze, Pile *p, int x, int y, int z) {
 }
 
 void show_maze(Maze *maze) {
-    int x, y, z, i;
+    int x, y, z;
 
     for(z = 0; z < maze->height; z++) {
 	    printf("Level %d:\n", z);

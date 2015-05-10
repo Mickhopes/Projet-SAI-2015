@@ -394,44 +394,49 @@ void helico(int xH, int yH, int zH){
     gluSphere(gluNewQuadric(), 5.0, 20, 20);
     glPopMatrix();
 
-
-
+    glPushMatrix();
+    glTranslatef(xH,yH,zH);
     /* Train d'atterrissage */
 
     float l = 1, h = 3, e = 1;
     float xabs = 3.5, yabs = 6+h, zabs = 6;
 
     glColor3f(0.2,0.2,0.2);
-    para_rect(xH-xabs,yH-yabs,zH-zabs,xH-xabs+l,yH-yabs+h, zH-zabs+e);
-    para_rect(xH+xabs,yH-yabs,zH-zabs,xH+xabs+l,yH-yabs+h,zH-zabs+e);
-    para_rect(xH-xabs,yH-yabs,zH+zabs,xH-xabs+l,yH-yabs+h,zH+zabs+e);
-    para_rect(xH+xabs,yH-yabs,zH+zabs,xH+xabs+l,yH-yabs+h,zH+zabs+e);
+    para_rect(-xabs,-yabs,-zabs,-xabs+l,-yabs+h, -zabs+e);
+    para_rect(xabs,-yabs,-zabs,xabs+l,-yabs+h,-zabs+e);
+    para_rect(-xabs,-yabs,+zabs,-xabs+l,-yabs+h,zabs+e);
+    para_rect(xabs,-yabs,zabs,xabs+l,-yabs+h,zabs+e);
 
 
     h = 1, e = 25;
     yabs +=h,zabs +=e/2;
 
     glColor3f(0.25,0.25,0.25);
-    para_rect(xH-xabs,yH-yabs,zH-zabs,xH-xabs+l,yH-yabs+h,zH+zabs);
-    para_rect(xH+xabs,yH-yabs,zH-zabs,xH+xabs+l,yH-yabs+h,zH+zabs);
+    para_rect(-xabs,-yabs,-zabs,-xabs+l,-yabs+h,zabs);
+    para_rect(xabs,-yabs,-zabs,xabs+l,-yabs+h,zabs);
 
     /* Mat */
     h = 2.5,e = 1;
     xabs = l/2,yabs=4+h,zabs = e/2;
 
     glColor3f(0.35,0.35,0.35);
-    para_rect(xH-xabs,yH+yabs,zH-zabs,xH+xabs,yH+yabs+h,zH+zabs);
+    para_rect(-xabs,yabs,-zabs,xabs,yabs+h,zabs);
 
     /* Pales de rotor*/
+
+    glPushMatrix();
+    glRotatef(angle_rotor, 0.0,yH,0.0);
 
     h = 0.2, e = 50;
     yabs+=2.5,zabs = e/2;
 
     glColor3f(0.4,0.4,0.4);
-    para_rect(xH-xabs,yH+yabs,zH-zabs,xH+xabs,yH+yabs+h,zH+zabs);
+    para_rect(-xabs,yabs,-zabs,xabs,yabs+h,zabs);
     l = e, e = 1;
     xabs = zabs,zabs = 0.5;
-    para_rect(xH-xabs,yH+yabs,zH-zabs,xH+xabs,yH+yabs+h,zH+zabs);
+    para_rect(-xabs,yabs,-zabs,xabs,yabs+h,zabs);
+
+    glPopMatrix();
 
 
     /* Queue */
@@ -440,20 +445,22 @@ void helico(int xH, int yH, int zH){
     xabs = l/2,yabs = h/2, zabs = 14;
 
     glColor3f(0.35,0.35,0.35);
-    para_rect(xH-xabs,yH-yabs,zH+zabs,xH+xabs,yH+yabs,zH+zabs+e);
+    para_rect(-xabs,-yabs,zabs,xabs,yabs,zabs+e);
 
     h = 2.5,e = 1;
     zabs += 19;
 
     glColor3f(0.3,0.3,0.3);
-    para_rect(xH-xabs,yH+yabs,zH+zabs,xH+xabs,yH+yabs+h,zH+zabs+e);
+    para_rect(-xabs,yabs,zabs,xabs,yabs+h,zabs+e);
+
+    glPopMatrix();
 
     /* Rotor de Queue */
 
     glPushMatrix();
     glTranslatef(-0.5,2.5,33.5);
     glTranslatef(xH,yH,zH);
-    glRotatef(45.0,1.0,0.0,0.0);
+    glRotatef(angle_rotor_queue,1.0,0.0,0.0);
 
 
     glColor3f(0.4,0.4,0.4);
