@@ -468,7 +468,7 @@ void helico(int xH, int yH, int zH){
     glPushMatrix();
     glTranslatef(xH,yH,zH);
     glScalef(2.0,1.5,3.0);
-    glColor3f(0.3,0.3,0.3);
+    glColor3f(0.15,0.25,0.45);
     gluSphere(gluNewQuadric(), 5.0, 20, 20);
     glPopMatrix();
 
@@ -479,7 +479,7 @@ void helico(int xH, int yH, int zH){
     float l = 1, h = 3, e = 1;
     float xabs = 3.5, yabs = 6+h, zabs = 6;
 
-    glColor3f(0.2,0.2,0.2);
+    glColor3f(0.06,0.3,0.55);
     para_rect(-xabs,-yabs,-zabs,-xabs+l,-yabs+h, -zabs+e);
     para_rect(xabs,-yabs,-zabs,xabs+l,-yabs+h,-zabs+e);
     para_rect(-xabs,-yabs,+zabs,-xabs+l,-yabs+h,zabs+e);
@@ -489,7 +489,7 @@ void helico(int xH, int yH, int zH){
     h = 1, e = 25;
     yabs +=h,zabs +=e/2;
 
-    glColor3f(0.25,0.25,0.25);
+    glColor3f(0.15,0.25,0.55);
     para_rect(-xabs,-yabs,-zabs,-xabs+l,-yabs+h,zabs);
     para_rect(xabs,-yabs,-zabs,xabs+l,-yabs+h,zabs);
 
@@ -522,13 +522,13 @@ void helico(int xH, int yH, int zH){
     l = 1, h = 1, e = 20;
     xabs = l/2,yabs = h/2, zabs = 14;
 
-    glColor3f(0.35,0.35,0.35);
+    glColor3f(0.06,0.3,0.55);
     para_rect(-xabs,-yabs,zabs,xabs,yabs,zabs+e);
 
     h = 2.5,e = 1;
     zabs += 19;
 
-    glColor3f(0.3,0.3,0.3);
+    glColor3f(0.06,0.3,0.55);
     para_rect(-xabs,yabs,zabs,xabs,yabs+h,zabs+e);
 
     glPopMatrix();
@@ -555,9 +555,6 @@ void helico(int xH, int yH, int zH){
     para_rect(-xabs,-yabs,-zabs,xabs,yabs,zabs);
 
     glPopMatrix();
-
-
-
 }
 
 

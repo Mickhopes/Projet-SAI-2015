@@ -99,7 +99,7 @@ void init_variables() {
 	tab_key[DESSUS] = -1;
 	tab_key[DESSOUS] = -1;
 
-	timer = 300;
+	timer = TIMER;
 }
 
 int load_gl_textures() {
