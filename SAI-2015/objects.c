@@ -15,13 +15,15 @@
     int x, y, z;
 
     glBindTexture(GL_TEXTURE_2D, texture[2]);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 
     /* Sol */
     for(z = 0; z < maze->width; z++) {
         for(x = 0; x < maze->length; x++) {
             if (maze->cases[z][x][0].MUR_BAS == 1) {
                 glBegin(GL_QUADS);
-                    glColor3f(0.6,0.6,0.6);
+                    glColor3f(1.0,1.0,1.0);
                     glTexCoord2f(0.0, 0.0); glVertex3f(x*TAILLE_CUBE,0,z*TAILLE_CUBE);
                     glTexCoord2f(1.0, 0.0); glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,0,z*TAILLE_CUBE);
                     glTexCoord2f(1.0, 1.0); glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,0,z*TAILLE_CUBE+TAILLE_CUBE);
@@ -32,13 +34,15 @@
     }
 
     glBindTexture(GL_TEXTURE_2D, texture[1]);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 
     /* Face gauche du batiment */
     for(x = 0; x < maze->length; x++) {
         for(y = 0; y < maze->height; y++) {
             if (maze->cases[0][x][y].MUR_GAUCHE == 1) {
                 glBegin(GL_QUADS);
-                    glColor3f(0.4,0.4,0.4);
+                    glColor3f(1.0,1.0,1.0);
                     glTexCoord2f(0.0, 0.0); glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE,0);
                     glTexCoord2f(1.0, 0.0); glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE,0);
                     glTexCoord2f(1.0, 1.0); glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,0);
@@ -49,13 +53,15 @@
     }
 
     glBindTexture(GL_TEXTURE_2D, texture[1]);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 
     /* Face avant du batiment */
     for(z = 0; z < maze->width; z++) {
         for(y = 0; y < maze->height; y++) {
             if (maze->cases[z][0][y].MUR_AVANT == 1) {
                 glBegin(GL_QUADS);
-                    glColor3f(0.4,0.4,0.4);
+                    glColor3f(1.0,1.0,1.0);
                     glTexCoord2f(0.0, 0.0); glVertex3f(0,y*TAILLE_CUBE,z*TAILLE_CUBE);
                     glTexCoord2f(1.0, 0.0); glVertex3f(0,y*TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
                     glTexCoord2f(1.0, 1.0); glVertex3f(0,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
@@ -71,8 +77,11 @@
                 /* On dessine le mur arrière */
                 if (maze->cases[z][x][y].MUR_ARRIERE == 1) {
                     glBindTexture(GL_TEXTURE_2D, texture[1]);
+                    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+                    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+
                     glBegin(GL_QUADS);
-                        glColor3f(0.4,0.4,0.4);
+                        glColor3f(1.0,1.0,1.0);
                         glTexCoord2f(0.0, 0.0); glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE,z*TAILLE_CUBE);
                         glTexCoord2f(0.0, 1.0); glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
                         glTexCoord2f(1.0, 1.0); glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
@@ -82,8 +91,11 @@
                 /* On dessine de mur de droite */
                 if (maze->cases[z][x][y].MUR_DROITE == 1) {
                     glBindTexture(GL_TEXTURE_2D, texture[1]);
+                    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+                    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+
                     glBegin(GL_QUADS);
-                        glColor3f(0.4,0.4,0.4);
+                        glColor3f(1.0,1.0,1.0);
                         glTexCoord2f(0.0, 0.0); glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
                         glTexCoord2f(1.0, 0.0); glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
                         glTexCoord2f(1.0, 1.0); glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
@@ -94,9 +106,12 @@
                  * entre deux niveaux
                  */
                 glBindTexture(GL_TEXTURE_2D, texture[2]);
+                glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+                glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+
                 if (a.x != z || a.y != x || a.z != y) {
                     glBegin(GL_QUADS);
-                        glColor3f(0.6,0.6,0.6);
+                        glColor3f(1.0,1.0,1.0);
                         glTexCoord2f(0.0, 0.0); glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
                         glTexCoord2f(1.0, 0.0); glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
                         glTexCoord2f(1.0, 1.0); glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
@@ -105,7 +120,7 @@
                 } else {
                     if (a.en_mouvement == 0) {
                         glBegin(GL_QUADS);
-                            glColor3f(0.6,0.6,0.6);
+                            glColor3f(1.0,1.0,1.0);
                             glTexCoord2f(0.0, 0.0); glVertex3f(x*TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
                             glTexCoord2f(1.0, 0.0); glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE);
                             glTexCoord2f(1.0, 1.0); glVertex3f(x*TAILLE_CUBE+TAILLE_CUBE,y*TAILLE_CUBE+TAILLE_CUBE,z*TAILLE_CUBE+TAILLE_CUBE);
