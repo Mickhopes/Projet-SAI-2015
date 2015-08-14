@@ -23,11 +23,11 @@
 #define WIDTH 800
 #define HEIGHT 600
 
-#define TAILLE_LABY_X 6
-#define TAILLE_LABY_Y 6
+#define TAILLE_LABY_X 20
+#define TAILLE_LABY_Y 8
 #define TAILLE_LABY_Z 6
 
-#define TIMER 300
+#define TIMER 1000
 
 #define HAUT 0
 #define BAS 1
